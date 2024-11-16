@@ -1,7 +1,7 @@
 rootProject.name = "high-stack-spring"
-include("receiver")
-include("factory")
-include("delivery")
+include("content-creation")
+include("moderation")
+include("distribution")
 
 pluginManagement {
     resolutionStrategy {
