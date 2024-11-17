@@ -62,6 +62,7 @@ flyway {
     user = "user"
     password = "pass"
     baselineOnMigrate = true
+    baselineVersion = "0"
     locations = arrayOf("classpath:db/migration")
     createSchemas = true
     cleanDisabled = false
