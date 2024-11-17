@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("jacoco")
+    id("org.flywaydb.flyway")
 }
 
 group = "com.yatskevich"
@@ -58,4 +59,14 @@ tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
     }
+}
+
+flyway {
+    url = "jdbc:postgresql://localhost:5432/test_db"
+    user = "user"
+    password = "pass"
+    baselineOnMigrate = true
+    locations = arrayOf("classpath:db/migration")
+    schemas = arrayOf("content_creation")
+    createSchemas = true
 }

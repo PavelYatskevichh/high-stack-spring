@@ -1,8 +1,3 @@
-rootProject.name = "high-stack-spring"
-include("content-creation")
-include("moderation")
-include("distribution")
-
 pluginManagement {
     resolutionStrategy {
         eachPlugin {
@@ -15,7 +10,14 @@ pluginManagement {
                     val springBootVersion: String by settings
                     useVersion(springBootVersion)
                 }
+                "org.flywaydb.flyway" -> {
+                    val flywayPluginVersion: String by settings
+                    useVersion(flywayPluginVersion)
+                }
             }
         }
     }
 }
+
+rootProject.name = "high-stack-spring"
+include("content-creation", "moderation", "distribution")
