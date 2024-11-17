@@ -10,10 +10,6 @@ pluginManagement {
                     val springBootVersion: String by settings
                     useVersion(springBootVersion)
                 }
-                "org.flywaydb.flyway" -> {
-                    val flywayPluginVersion: String by settings
-                    useVersion(flywayPluginVersion)
-                }
             }
         }
     }
