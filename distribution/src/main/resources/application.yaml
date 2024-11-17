@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: hs-spring-distribution
+
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+
+  flyway:
+    enabled: true
+    schemas: distribution
+    createSchemas: true
+    baselineOnMigrate: true
+    locations: classpath:db/migration
+    check-location: true
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
