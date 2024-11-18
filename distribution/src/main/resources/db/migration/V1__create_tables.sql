@@ -21,7 +21,7 @@ CREATE TABLE distribution.views (
     viewed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE distribution.feedback (
+CREATE TABLE distribution.feedbacks (
     id UUID PRIMARY KEY,
     publication_id UUID NOT NULL REFERENCES distribution.publications(id),
     audience_id UUID NOT NULL REFERENCES distribution.audience(id),
