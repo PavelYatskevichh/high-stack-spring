@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HsSpringModerationApplication {
+public class ModerationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HsSpringModerationApplication.class, args);
+		SpringApplication.run(ModerationApplication.class, args);
 	}
 
 }

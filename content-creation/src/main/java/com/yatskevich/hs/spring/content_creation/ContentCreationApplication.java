@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HsSpringContentCreationApplication {
+public class ContentCreationApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HsSpringContentCreationApplication.class, args);
+        SpringApplication.run(ContentCreationApplication.class, args);
     }
 
 }

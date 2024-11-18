@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HsSpringDistributionApplication {
+public class DistributionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HsSpringDistributionApplication.class, args);
+		SpringApplication.run(DistributionApplication.class, args);
 	}
 
 }
