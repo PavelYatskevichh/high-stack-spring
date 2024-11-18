@@ -6,6 +6,7 @@
           <entry key="POSTGRES_PASSWORD" value="pass" />
           <entry key="POSTGRES_URL" value="jdbc:postgresql://localhost:5432/test_db" />
           <entry key="POSTGRES_USERNAME" value="user" />
+          <entry key="SPRING_THREADS_VIRTUAL_ENABLED" value="false" />
         </map>
       </option>
       <option name="executionName" />
