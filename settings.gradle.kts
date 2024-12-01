@@ -1,8 +1,3 @@
-rootProject.name = "high-stack-spring"
-include("content-creation")
-include("moderation")
-include("distribution")
-
 pluginManagement {
     resolutionStrategy {
         eachPlugin {
@@ -19,3 +14,6 @@ pluginManagement {
         }
     }
 }
+
+rootProject.name = "high-stack-spring"
+include("content-creation", "moderation", "distribution")

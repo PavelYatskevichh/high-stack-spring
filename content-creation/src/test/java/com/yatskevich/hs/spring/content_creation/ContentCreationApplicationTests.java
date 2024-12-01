@@ -1,10 +1,10 @@
-package com.yatskevich.hs.spring.moderation;
+package com.yatskevich.hs.spring.content_creation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HsSpringModerationApplicationTests {
+class ContentCreationApplicationTests {
 
 	@Test
 	void contextLoads() {
