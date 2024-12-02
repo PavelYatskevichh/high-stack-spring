@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "quality_metrics")
+@Table(schema = "moderation", name = "quality_metrics")
 public class QualityMetric {
 
     @Id

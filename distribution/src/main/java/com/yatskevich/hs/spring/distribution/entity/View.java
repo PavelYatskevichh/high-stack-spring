@@ -22,7 +22,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "views")
+@Table(schema = "distribution", name = "views")
 public class View {
 
     @Id

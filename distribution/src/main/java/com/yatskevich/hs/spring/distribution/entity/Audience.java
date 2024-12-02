@@ -19,7 +19,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "audience")
+@Table(schema = "distribution", name = "audience")
 public class Audience {
 
     @Id
@@ -30,8 +30,8 @@ public class Audience {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "body", nullable = false, unique = true)
-    private String body;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

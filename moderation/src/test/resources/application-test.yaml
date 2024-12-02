@@ -1,0 +1,6 @@
+#TODO remove and replace with testcontainers
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test_db
+    username: user
+    password: pass

@@ -29,7 +29,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "content_items")
+@Table(schema = "content_creation", name = "content_items")
 public class ContentItem {
 
     @Id

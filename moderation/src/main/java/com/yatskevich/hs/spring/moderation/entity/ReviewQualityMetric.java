@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "review_quality_metrics")
+@Table(schema = "moderation", name = "review_quality_metrics")
 public class ReviewQualityMetric {
 
     @EmbeddedId

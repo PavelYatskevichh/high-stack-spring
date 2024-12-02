@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tags")
+@Table(schema = "content_creation", name = "tags")
 public class Tag {
 
     @Id

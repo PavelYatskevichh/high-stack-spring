@@ -22,7 +22,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "revisions")
+@Table(schema = "content_creation", name = "revisions")
 public class Revision {
 
     @Id

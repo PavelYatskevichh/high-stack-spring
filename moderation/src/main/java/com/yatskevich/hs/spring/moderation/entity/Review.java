@@ -3,6 +3,8 @@ package com.yatskevich.hs.spring.moderation.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -11,7 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "reviews")
+@Table(schema = "moderation", name = "reviews")
 public class Review {
 
     @Id
@@ -37,6 +41,8 @@ public class Review {
     private UUID reviewerId;
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private ReviewStatus status;
 
     @Column(name = "message")

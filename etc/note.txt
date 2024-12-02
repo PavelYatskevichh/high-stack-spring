@@ -1,1 +1,0 @@
-Почему не проходит hibernate ddl validate при build?
