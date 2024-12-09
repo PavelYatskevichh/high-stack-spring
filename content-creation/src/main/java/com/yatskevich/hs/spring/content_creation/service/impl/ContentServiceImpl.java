@@ -1,6 +1,6 @@
 package com.yatskevich.hs.spring.content_creation.service.impl;
 
-import com.yatskevich.hs.spring.content_creation.dto.ContentRequestDto;
+import com.yatskevich.hs.spring.content_creation.dto.ContentDto;
 import com.yatskevich.hs.spring.content_creation.entity.Content;
 import com.yatskevich.hs.spring.content_creation.entity.ContentStatus;
 import com.yatskevich.hs.spring.content_creation.repository.ContentRepository;
@@ -20,7 +20,7 @@ public class ContentServiceImpl implements ContentService {
     private final ContentRepository contentRepository;
 
     @Override
-    public void createContent(ContentRequestDto contentDto, UUID authorId) {
+    public void createContent(ContentDto contentDto, UUID authorId) {
         Content content = Content.builder()
             .title(contentDto.getTitle())
             .description(contentDto.getDescription())
