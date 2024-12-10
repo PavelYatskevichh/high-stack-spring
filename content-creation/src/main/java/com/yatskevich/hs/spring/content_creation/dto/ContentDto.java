@@ -1,16 +1,23 @@
 package com.yatskevich.hs.spring.content_creation.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import com.yatskevich.hs.spring.content_creation.entity.ContentStatus;
+import com.yatskevich.hs.spring.content_creation.entity.Tag;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class ContentDto {
-    @NotBlank(message = "Content title must not be blank on null.")
+    private UUID id;
     private String title;
-    @NotBlank(message = "Content description must not be blank on null.")
     private String description;
-    @NotBlank(message = "Content body must not be blank on null.")
     private String body;
+    private UUID authorId;
+    private ContentStatus status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private List<Tag> tags;
 }

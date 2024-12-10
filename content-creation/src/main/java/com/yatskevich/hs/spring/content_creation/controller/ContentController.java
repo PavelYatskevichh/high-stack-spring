@@ -1,10 +1,12 @@
 package com.yatskevich.hs.spring.content_creation.controller;
 
+import com.yatskevich.hs.spring.content_creation.dto.ContentDataDto;
 import com.yatskevich.hs.spring.content_creation.dto.ContentDto;
 import com.yatskevich.hs.spring.content_creation.dto.ContentStatusDto;
 import com.yatskevich.hs.spring.content_creation.dto.ContentTagsDto;
 import com.yatskevich.hs.spring.content_creation.service.ContentService;
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,30 +24,30 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/contents")
+@RequestMapping("/v1/contents")
 public class ContentController {
 
     private final ContentService contentService;
 
     @GetMapping
-    public void getAllContents(@RequestParam UUID authorId) {
+    public List<ContentDto> getAll(@RequestParam UUID authorId) {
         log.debug("Getting all the content of author {}.", authorId);
-        contentService.getAll(authorId);
+        return contentService.getAll(authorId);
     }
 
     @GetMapping("/{id}")
-    public void getContentById(@RequestParam UUID authorId,
-                               @PathVariable UUID contentId) {
+    public ContentDto getById(@RequestParam UUID authorId,
+                        @PathVariable UUID contentId) {
         log.debug("Getting content with ID {} of author {}.", contentId, authorId);
-        contentService.getById(contentId, authorId);
+        return contentService.getById(contentId, authorId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createContent(@RequestParam UUID authorId,
-                              @RequestBody @Valid ContentDto contentDto) {
-        log.debug("Creating new content {} by author {}.", contentDto.getTitle(), authorId);
-        contentService.createContent(contentDto, authorId);
+    public void create(@RequestParam UUID authorId,
+                       @RequestBody @Valid ContentDataDto contentDataDto) {
+        log.debug("Creating new content {} by author {}.", contentDataDto.getTitle(), authorId);
+        contentService.create(contentDataDto, authorId);
     }
 
     //TODO decide add or update tags
