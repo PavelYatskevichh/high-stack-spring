@@ -4,6 +4,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 SELECT uuid_generate_v4();
 
+SELECT gen_random_uuid() -- Don't need EXTENSION "uuid-ossp"
+
 ---
 
 CREATE SCHEMA IF NOT EXISTS auth;
