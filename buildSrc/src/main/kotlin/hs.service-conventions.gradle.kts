@@ -33,15 +33,15 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
 //    implementation("org.springframework.kafka:spring-kafka")
-//    implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    implementation("org.mapstruct:mapstruct:${mapstructVersion}")
 
     compileOnly("org.projectlombok:lombok")
 
     runtimeOnly("org.postgresql:postgresql")
 
     annotationProcessor("org.projectlombok:lombok")
-//    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
-//    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 //    testImplementation("org.springframework.kafka:spring-kafka-test")

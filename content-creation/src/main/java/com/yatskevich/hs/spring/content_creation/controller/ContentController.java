@@ -11,10 +11,12 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,14 +33,14 @@ public class ContentController {
 
     @GetMapping
     public List<ContentDto> getAll(@RequestParam UUID authorId) {
-        log.debug("Getting all the content of author {}.", authorId);
+        log.debug("Getting all the content of the author {}.", authorId);
         return contentService.getAll(authorId);
     }
 
     @GetMapping("/{id}")
     public ContentDto getById(@RequestParam UUID authorId,
-                        @PathVariable UUID contentId) {
-        log.debug("Getting content with ID {} of author {}.", contentId, authorId);
+                              @PathVariable UUID contentId) {
+        log.debug("Getting the content {} of the author {}.", contentId, authorId);
         return contentService.getById(contentId, authorId);
     }
 
@@ -50,7 +52,6 @@ public class ContentController {
         contentService.create(contentDataDto, authorId);
     }
 
-    //TODO decide add or update tags
     @PatchMapping("/{id}/tags")
     public void addTags(@RequestParam UUID authorId,
                         @RequestBody @Valid ContentTagsDto contentTagsDto) {
@@ -59,11 +60,19 @@ public class ContentController {
         contentService.addTags(contentTagsDto, authorId);
     }
 
-    @PatchMapping("/{id}/status")
-    public void updateContentStatus(@RequestParam UUID authorId,
-                                    @RequestBody @Valid ContentStatusDto contentStatusDto) {
-        log.debug("Change status to {} of the content with ID {} by author {}.",
-            contentStatusDto.getStatus(), contentStatusDto.getId(), authorId);
-        contentService.updateContentStatus(contentStatusDto, authorId);
+    @DeleteMapping("/{id}/tags")
+    public void deleteTags(@RequestParam UUID authorId,
+                           @RequestBody @Valid ContentTagsDto contentTagsDto) {
+        log.debug("Deleting tags {} from the content {} by author {}.",
+            contentTagsDto.getTagIds(), contentTagsDto.getId(), authorId);
+        contentService.deleteTags(contentTagsDto, authorId);
+    }
+
+    //TODO add role dependent logic
+    @PutMapping("/{id}/status")
+    public void updateContentStatus(@RequestBody @Valid ContentStatusDto contentStatusDto) {
+        log.debug("Change status to {} of the content {}.",
+            contentStatusDto.getStatus(), contentStatusDto.getId());
+        contentService.updateContentStatus(contentStatusDto);
     }
 }

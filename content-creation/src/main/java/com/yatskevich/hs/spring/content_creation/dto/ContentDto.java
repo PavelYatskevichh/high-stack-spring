@@ -1,5 +1,6 @@
 package com.yatskevich.hs.spring.content_creation.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yatskevich.hs.spring.content_creation.entity.ContentStatus;
 import com.yatskevich.hs.spring.content_creation.entity.Tag;
 import java.time.LocalDateTime;
@@ -17,7 +18,9 @@ public class ContentDto {
     private String body;
     private UUID authorId;
     private ContentStatus status;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime updatedAt;
     private List<Tag> tags;
 }
