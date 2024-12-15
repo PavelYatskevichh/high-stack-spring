@@ -24,8 +24,8 @@ public class RevisionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createContent(@RequestParam UUID authorId,
-                              @RequestBody @Valid RevisionDto revisionDto) {
+    public void createRevision(@RequestParam UUID authorId,
+                               @RequestBody @Valid RevisionDto revisionDto) {
         log.debug("Creating new revision for content {} by author {}.", revisionDto.getContentId(), authorId);
         revisionService.createRevision(revisionDto, authorId);
     }

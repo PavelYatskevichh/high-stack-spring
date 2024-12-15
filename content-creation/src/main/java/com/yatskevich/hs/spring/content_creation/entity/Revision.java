@@ -42,6 +42,15 @@ public class Revision {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "title_delta", nullable = false)
+    private String titleDelta;
+
+    @Column(name = "description_delta", nullable = false)
+    private String descriptionDelta;
+
+    @Column(name = "body_delta", nullable = false)
+    private String bodyDelta;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
