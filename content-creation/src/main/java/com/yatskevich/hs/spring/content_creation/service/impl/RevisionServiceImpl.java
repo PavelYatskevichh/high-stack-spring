@@ -6,6 +6,7 @@ import com.yatskevich.hs.spring.content_creation.service.RevisionService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RevisionServiceImpl implements RevisionService {
 
     private final RevisionRepository revisionRepository;
+    private final DiffMatchPatch diffMatchPatch;
 
     @Override
     public void getAll(UUID contentId, UUID authorId) {
