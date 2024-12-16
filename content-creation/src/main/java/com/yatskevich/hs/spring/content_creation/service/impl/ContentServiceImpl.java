@@ -75,7 +75,6 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public void addTags(ContentTagsDto contentTagsDto, UUID authorId) {
 
-        List<Tag> tags = tagRepository.findAllById(contentTagsDto.getTagIds())
     }
 
     @Override
