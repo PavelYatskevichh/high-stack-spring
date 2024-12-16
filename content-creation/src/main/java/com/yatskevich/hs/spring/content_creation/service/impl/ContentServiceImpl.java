@@ -6,8 +6,10 @@ import com.yatskevich.hs.spring.content_creation.dto.ContentStatusDto;
 import com.yatskevich.hs.spring.content_creation.dto.ContentTagsDto;
 import com.yatskevich.hs.spring.content_creation.entity.Content;
 import com.yatskevich.hs.spring.content_creation.entity.ContentStatus;
+import com.yatskevich.hs.spring.content_creation.entity.Tag;
 import com.yatskevich.hs.spring.content_creation.mapper.ContentMapper;
 import com.yatskevich.hs.spring.content_creation.repository.ContentRepository;
+import com.yatskevich.hs.spring.content_creation.repository.TagRepository;
 import com.yatskevich.hs.spring.content_creation.service.ContentService;
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +26,7 @@ public class ContentServiceImpl implements ContentService {
 
     private final ContentRepository contentRepository;
     private final ContentMapper contentMapper;
+    private final TagRepository tagRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -64,25 +67,15 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public void updateContentStatus(ContentStatusDto contentStatusDto) {
-        UUID contentId = contentStatusDto.getId();
-
-        log.debug("Searching the content {} in the database.", contentId);
-        Content content = contentRepository.findById(contentId).orElseThrow(() -> {
-            log.error("The content {} is not found in the database.", contentId);
-            //FIXME create exception
-            return new RuntimeException("The content %s is not found in the database."
-                .formatted(contentId));
-        });
-
-        content.setStatus(contentStatusDto.getStatus());
-        log.debug("Saving content {} with updated status {} to the database.",
-            contentId, contentStatusDto.getStatus());
-        contentRepository.save(content);
+        log.debug("Changing the status of the content {} to {} in the database.",
+            contentStatusDto.getId(), contentStatusDto.getStatus());
+        contentRepository.updateStatus(contentStatusDto.getId(), contentStatusDto.getStatus());
     }
 
     @Override
     public void addTags(ContentTagsDto contentTagsDto, UUID authorId) {
 
+        List<Tag> tags = tagRepository.findAllById(contentTagsDto.getTagIds())
     }
 
     @Override
