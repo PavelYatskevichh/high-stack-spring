@@ -1,7 +1,7 @@
 package com.yatskevich.hs.spring.content_creation.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,14 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RevisionDto {
-    @NotNull(message = "Content ID must not be null.")
     private UUID contentId;
-    @NotBlank(message = "Revision description must not be blank on null.")
+    private Integer revisionNumber;
     private String description;
-    @NotBlank(message = "Content title must not be blank on null.")
     private String contentTitle;
-    @NotBlank(message = "Content description must not be blank on null.")
     private String contentDescription;
-    @NotBlank(message = "Content body must not be blank on null.")
     private String contentBody;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime createdAt;
 }

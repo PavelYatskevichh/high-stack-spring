@@ -15,7 +15,7 @@ public interface ContentService {
 
     void create(ContentDataDto contentDataDto, UUID authorId);
 
-    void updateContentStatus(ContentStatusDto contentStatusDto);
+    void updateStatus(ContentStatusDto contentStatusDto);
 
     void addTags(ContentTagsDto contentTagsDto, UUID authorId);
 

@@ -33,7 +33,7 @@ public class ContentController {
 
     @GetMapping
     public List<ContentDto> getAll(@RequestParam UUID authorId) {
-        log.debug("Getting all the content of the author {}.", authorId);
+        log.debug("Getting all the contents of the author {}.", authorId);
         return contentService.getAll(authorId);
     }
 
@@ -70,9 +70,9 @@ public class ContentController {
 
     //TODO add role dependent logic
     @PutMapping("/status")
-    public void updateContentStatus(@RequestBody @Valid ContentStatusDto contentStatusDto) {
+    public void updateStatus(@RequestBody @Valid ContentStatusDto contentStatusDto) {
         log.debug("Change status to {} of the content {}.",
             contentStatusDto.getStatus(), contentStatusDto.getId());
-        contentService.updateContentStatus(contentStatusDto);
+        contentService.updateStatus(contentStatusDto);
     }
 }

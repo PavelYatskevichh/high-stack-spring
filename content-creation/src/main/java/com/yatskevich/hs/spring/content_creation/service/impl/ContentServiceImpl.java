@@ -72,7 +72,7 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public void updateContentStatus(ContentStatusDto contentStatusDto) {
+    public void updateStatus(ContentStatusDto contentStatusDto) {
         log.debug("Changing the status of the content {} to {} in the database.",
             contentStatusDto.getId(), contentStatusDto.getStatus());
         contentRepository.updateStatus(contentStatusDto.getId(), contentStatusDto.getStatus());
