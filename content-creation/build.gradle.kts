@@ -4,6 +4,12 @@ plugins {
 
 version = "0.0.1"
 
+val diffMatchPatchVersion: String by project
+
+dependencies {
+    implementation("org.bitbucket.cowwoc:diff-match-patch:${diffMatchPatchVersion}")
+}
+
 flyway {
     schemas = arrayOf("content_creation")
 }

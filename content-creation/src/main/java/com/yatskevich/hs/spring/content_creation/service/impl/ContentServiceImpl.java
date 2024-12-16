@@ -42,7 +42,7 @@ public class ContentServiceImpl implements ContentService {
     private Content findByIdAndAuthorIdOrElseThrow(UUID contentId, UUID authorId) {
         return contentRepository.findByIdAndAuthorId(contentId, authorId).orElseThrow(() -> {
             log.error("The content {} of the author {} is not found in the database.", contentId, authorId);
-            //TODO create exception
+            //FIXME create exception
             return new RuntimeException("The content %s of the author %s is not found in the database."
                 .formatted(contentId, authorId));
         });
@@ -69,7 +69,7 @@ public class ContentServiceImpl implements ContentService {
         log.debug("Searching the content {} in the database.", contentId);
         Content content = contentRepository.findById(contentId).orElseThrow(() -> {
             log.error("The content {} is not found in the database.", contentId);
-            //TODO create exception
+            //FIXME create exception
             return new RuntimeException("The content %s is not found in the database."
                 .formatted(contentId));
         });
