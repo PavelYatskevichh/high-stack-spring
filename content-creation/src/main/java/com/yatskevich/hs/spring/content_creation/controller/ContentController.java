@@ -52,7 +52,7 @@ public class ContentController {
         contentService.create(contentDataDto, authorId);
     }
 
-    @PatchMapping("/{id}/tags")
+    @PatchMapping("/tags")
     public void addTags(@RequestParam UUID authorId,
                         @RequestBody @Valid ContentTagsDto contentTagsDto) {
         log.debug("Adding tags {} to the content {} by author {}.",
@@ -60,7 +60,7 @@ public class ContentController {
         contentService.addTags(contentTagsDto, authorId);
     }
 
-    @DeleteMapping("/{id}/tags")
+    @DeleteMapping("/tags")
     public void deleteTags(@RequestParam UUID authorId,
                            @RequestBody @Valid ContentTagsDto contentTagsDto) {
         log.debug("Deleting tags {} from the content {} by author {}.",
@@ -69,7 +69,7 @@ public class ContentController {
     }
 
     //TODO add role dependent logic
-    @PutMapping("/{id}/status")
+    @PutMapping("/status")
     public void updateContentStatus(@RequestBody @Valid ContentStatusDto contentStatusDto) {
         log.debug("Change status to {} of the content {}.",
             contentStatusDto.getStatus(), contentStatusDto.getId());

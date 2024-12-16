@@ -11,8 +11,11 @@ import com.yatskevich.hs.spring.content_creation.mapper.ContentMapper;
 import com.yatskevich.hs.spring.content_creation.repository.ContentRepository;
 import com.yatskevich.hs.spring.content_creation.repository.TagRepository;
 import com.yatskevich.hs.spring.content_creation.service.ContentService;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class ContentServiceImpl implements ContentService {
+
+    private static final String ADD_OP_KEY_WORD = "added";
+    private static final String DELETE_OP_KEY_WORD = "deleted";
 
     private final ContentRepository contentRepository;
     private final ContentMapper contentMapper;
@@ -38,11 +44,11 @@ public class ContentServiceImpl implements ContentService {
     @Override
     @Transactional(readOnly = true)
     public ContentDto getById(UUID contentId, UUID authorId) {
-        log.debug("Searching the content {} of the author {} in the database.", contentId, authorId);
-        return contentMapper.toDto(findByIdAndAuthorIdOrElseThrow(contentId, authorId));
+        return contentMapper.toDto(findContentByIdAndAuthorIdOrElseThrow(contentId, authorId));
     }
 
-    private Content findByIdAndAuthorIdOrElseThrow(UUID contentId, UUID authorId) {
+    private Content findContentByIdAndAuthorIdOrElseThrow(UUID contentId, UUID authorId) {
+        log.debug("Searching the content {} of the author {} in the database.", contentId, authorId);
         return contentRepository.findByIdAndAuthorId(contentId, authorId).orElseThrow(() -> {
             log.error("The content {} of the author {} is not found in the database.", contentId, authorId);
             //FIXME create exception
@@ -74,11 +80,46 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public void addTags(ContentTagsDto contentTagsDto, UUID authorId) {
-
+        updateContentTags(contentTagsDto, authorId, List::addAll, ADD_OP_KEY_WORD);
     }
 
     @Override
     public void deleteTags(ContentTagsDto contentTagsDto, UUID authorId) {
-
+        updateContentTags(contentTagsDto, authorId, List::removeAll, DELETE_OP_KEY_WORD);
     }
+
+    private void updateContentTags(ContentTagsDto contentTagsDto, UUID authorId,
+                                   BiConsumer<List<Tag>, List<Tag>> operationOnTags, String opKeyWord) {
+        Set<UUID> tagIds = new HashSet<>(contentTagsDto.getTagIds());
+        UUID contentId = contentTagsDto.getId();
+
+        List<Tag> tagsToBeProcessed = findAllTagsByIdsOrElseThrow(tagIds, contentId, authorId);
+        Content content = findContentByIdAndAuthorIdOrElseThrow(contentId, authorId);
+        List<Tag> currentTags = content.getTags();
+
+        operationOnTags.accept(currentTags, tagsToBeProcessed);
+
+        log.debug("Updating the content {} with {} tags {} to the database.", contentId, opKeyWord, tagIds);
+        contentRepository.save(content);
+    }
+
+    private List<Tag> findAllTagsByIdsOrElseThrow(Set<UUID> tagIds, UUID contentId, UUID authorId) {
+        log.debug("Searching the tags {} in the database.", tagIds);
+        List<Tag> tags = tagRepository.findAllById(tagIds);
+        List<UUID> nonExistingIds = tags.stream()
+            .map(Tag::getId)
+            .filter(e -> !tagIds.contains(e))
+            .toList();
+
+        if (!nonExistingIds.isEmpty()) {
+            log.error("Provided non-existing tag IDs {} when updating the content {} by author {}.",
+                tagIds, contentId, authorId);
+            //FIXME create exception
+            throw new RuntimeException("Provided non-existing tag IDs %s when updating the content %s by author %s."
+                .formatted(tagIds, contentId, authorId));
+        }
+
+        return tags;
+    }
+
 }
