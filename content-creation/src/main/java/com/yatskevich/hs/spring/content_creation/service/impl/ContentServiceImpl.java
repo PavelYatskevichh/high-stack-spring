@@ -47,7 +47,9 @@ public class ContentServiceImpl implements ContentService {
         return contentMapper.toDto(findContentByIdAndAuthorIdOrElseThrow(contentId, authorId));
     }
 
-    private Content findContentByIdAndAuthorIdOrElseThrow(UUID contentId, UUID authorId) {
+    @Override
+    @Transactional(readOnly = true)
+    public Content findContentByIdAndAuthorIdOrElseThrow(UUID contentId, UUID authorId) {
         log.debug("Searching the content {} of the author {} in the database.", contentId, authorId);
         return contentRepository.findByIdAndAuthorId(contentId, authorId).orElseThrow(() -> {
             log.error("The content {} of the author {} is not found in the database.", contentId, authorId);

@@ -1,8 +1,10 @@
 package com.yatskevich.hs.spring.content_creation.controller;
 
 import com.yatskevich.hs.spring.content_creation.dto.RevisionDataDto;
+import com.yatskevich.hs.spring.content_creation.dto.RevisionDto;
 import com.yatskevich.hs.spring.content_creation.service.RevisionService;
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +26,10 @@ public class RevisionController {
     private final RevisionService revisionService;
 
     @GetMapping
-    public void getAll(@RequestParam UUID contentId,
-                       @RequestParam UUID authorId) {
+    public List<RevisionDto> getAllForContent(@RequestParam UUID contentId,
+                                              @RequestParam UUID authorId) {
         log.debug("Getting all the revisions of the content {} of the author {}.", contentId, authorId);
-        revisionService.getAll(contentId, authorId);
+        return revisionService.getAllForContent(contentId, authorId);
     }
 
     @PostMapping
