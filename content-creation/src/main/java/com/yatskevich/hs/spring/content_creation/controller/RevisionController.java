@@ -2,6 +2,7 @@ package com.yatskevich.hs.spring.content_creation.controller;
 
 import com.yatskevich.hs.spring.content_creation.dto.RevisionDataDto;
 import com.yatskevich.hs.spring.content_creation.dto.RevisionDto;
+import com.yatskevich.hs.spring.content_creation.service.ContentVersionService;
 import com.yatskevich.hs.spring.content_creation.service.RevisionService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -23,13 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/revisions")
 public class RevisionController {
 
-    private final RevisionService revisionService;
+    private final ContentVersionService contentVersionService;
 
     @GetMapping
     public List<RevisionDto> getAllForContent(@RequestParam UUID contentId,
                                               @RequestParam UUID authorId) {
         log.debug("Getting all the revisions of the content {} of the author {}.", contentId, authorId);
-        return revisionService.getAllForContent(contentId, authorId);
+        return contentVersionService.getAllByContentAndAuthor(contentId, authorId);
     }
 
     @PostMapping
@@ -37,6 +38,6 @@ public class RevisionController {
     public void create(@RequestParam UUID authorId,
                        @RequestBody @Valid RevisionDataDto revisionDataDto) {
         log.debug("Creating new revision for the content {} by author {}.", revisionDataDto.getContentId(), authorId);
-        revisionService.create(revisionDataDto, authorId);
+        contentVersionService.createRevision(revisionDataDto, authorId);
     }
 }

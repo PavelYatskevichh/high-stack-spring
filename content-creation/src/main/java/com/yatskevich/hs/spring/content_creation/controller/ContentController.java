@@ -5,6 +5,7 @@ import com.yatskevich.hs.spring.content_creation.dto.ContentDto;
 import com.yatskevich.hs.spring.content_creation.dto.ContentStatusDto;
 import com.yatskevich.hs.spring.content_creation.dto.ContentTagsDto;
 import com.yatskevich.hs.spring.content_creation.service.ContentService;
+import com.yatskevich.hs.spring.content_creation.service.ContentVersionService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContentController {
 
     private final ContentService contentService;
+    private final ContentVersionService contentVersionService;
 
     @GetMapping
     public List<ContentDto> getAll(@RequestParam UUID authorId) {
@@ -73,6 +75,6 @@ public class ContentController {
     public void updateStatus(@RequestBody @Valid ContentStatusDto contentStatusDto) {
         log.debug("Change status to {} of the content {}.",
             contentStatusDto.getStatus(), contentStatusDto.getId());
-        contentService.updateStatus(contentStatusDto);
+        contentVersionService.updateStatus(contentStatusDto);
     }
 }
