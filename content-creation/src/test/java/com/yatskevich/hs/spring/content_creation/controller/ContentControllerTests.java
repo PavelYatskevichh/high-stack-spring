@@ -67,7 +67,7 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
         mockMvc.perform(
                 post("/v1/contents").param("authorId", USER_ID)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(FileUtils.getJsonAsString("classpath:scripts/createContent_invalidRequest.json"))
+                    .content(FileUtils.getJsonAsString("classpath:json/createContent_invalidRequest.json"))
             )
             .andExpect(status().isBadRequest());
     }
@@ -77,7 +77,7 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
         mockMvc.perform(
                 post("/v1/contents").param("authorId", USER_ID)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(FileUtils.getJsonAsString("classpath:scripts/createContent_request.json"))
+                    .content(FileUtils.getJsonAsString("classpath:json/createContent_request.json"))
             )
             .andExpect(status().isCreated());
 
@@ -89,4 +89,23 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
         assertEquals(NEW_CONTENT_DESCRIPTION, optional.get().getDescription());
         assertEquals(NEW_CONTENT_BODY, optional.get().getBody());
     }
+
+//    @Test
+//    @Sql({"classpath:scripts/insert_data_for_content_with_tags.sql"})
+//    void addTags_ValidRequestBody_ReturnStatusOk() throws Exception {
+//        mockMvc.perform(
+//                post("/v1/contents/tags").param("authorId", USER_ID)
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .content(FileUtils.getJsonAsString("classpath:json/createContent_request.json"))
+//            )
+//            .andExpect(status().isOk());
+//
+//        List<Content> contents = contentRepository.findAllByAuthorId(UUID.fromString(USER_ID));
+//        assertThat(contents).isNotNull();
+//        Optional<Content> optional = contents.stream().max(Comparator.comparing(Content::getCreatedAt));
+//        assertThat(optional).isPresent();
+//        assertEquals(NEW_CONTENT_TITLE, optional.get().getTitle());
+//        assertEquals(NEW_CONTENT_DESCRIPTION, optional.get().getDescription());
+//        assertEquals(NEW_CONTENT_BODY, optional.get().getBody());
+//    }
 }
