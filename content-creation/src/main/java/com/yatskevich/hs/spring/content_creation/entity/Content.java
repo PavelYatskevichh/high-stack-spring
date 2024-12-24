@@ -66,9 +66,10 @@ public class Content {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "content_item_tags",
-            joinColumns = {@JoinColumn(name = "content_item_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")}
+        schema = "content_creation",
+        name = "content_item_tags",
+        joinColumns = {@JoinColumn(name = "content_item_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")}
     )
     private List<Tag> tags;
 }

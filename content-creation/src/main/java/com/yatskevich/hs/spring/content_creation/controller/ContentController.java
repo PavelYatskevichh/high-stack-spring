@@ -41,7 +41,7 @@ public class ContentController {
 
     @GetMapping("/{id}")
     public ContentDto getById(@RequestParam UUID authorId,
-                              @PathVariable UUID contentId) {
+                              @PathVariable("id") UUID contentId) {
         log.debug("Getting the content {} of the author {}.", contentId, authorId);
         return contentService.getById(contentId, authorId);
     }

@@ -32,7 +32,6 @@ public class ContentServiceImpl implements ContentService {
     private static final String DELETE_OP_KEY_WORD = "deleted";
 
     private final ContentRepository contentRepository;
-    private final RevisionService revisionService;
     private final ContentMapper contentMapper;
     private final TagRepository tagRepository;
 
