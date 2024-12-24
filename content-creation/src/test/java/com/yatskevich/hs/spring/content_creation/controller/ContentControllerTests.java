@@ -11,6 +11,7 @@ import com.yatskevich.hs.spring.content_creation.AbstractTestcontainersTests;
 import com.yatskevich.hs.spring.content_creation.FileUtils;
 import com.yatskevich.hs.spring.content_creation.entity.Content;
 import com.yatskevich.hs.spring.content_creation.repository.ContentRepository;
+import jakarta.validation.ValidationException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
 
     @Test
     @Sql({"classpath:scripts/insert_data_for_content_with_tags.sql"})
-    void getAll_ContentsExist_ReturnsAll() throws Exception {
+    void getAll_ContentsExist_ReturnStatusOkAndAllContents() throws Exception {
         mockMvc.perform(get("/v1/contents").param("authorId", USER_ID))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.[*].id", Matchers.containsInAnyOrder(CONTENT_ID_1, CONTENT_ID_2)));
@@ -55,14 +56,14 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
 
     @Test
     @Sql({"classpath:scripts/insert_data_for_content_with_tags.sql"})
-    void getById_ContentExist_Returns() throws Exception {
+    void getById_ContentExist_ReturnStatusOkAndContent() throws Exception {
         mockMvc.perform(get("/v1/contents/{id}", CONTENT_ID_1).param("authorId", USER_ID))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(CONTENT_ID_1));
     }
 
     @Test
-    void create_InvalidRequestBody_ThrowsException() throws Exception {
+    void create_InvalidRequestBody_ReturnStatusBadRequest() throws Exception {
         mockMvc.perform(
                 post("/v1/contents").param("authorId", USER_ID)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +73,7 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
     }
 
     @Test
-    void create_ValidRequestBody_Creates() throws Exception {
+    void create_ValidRequestBody_ReturnStatusCreated() throws Exception {
         mockMvc.perform(
                 post("/v1/contents").param("authorId", USER_ID)
                     .contentType(MediaType.APPLICATION_JSON)
