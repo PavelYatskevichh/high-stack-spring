@@ -63,6 +63,7 @@ public class ContentController {
     }
 
     @DeleteMapping("/tags")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTags(@RequestParam UUID authorId,
                            @RequestBody @Valid ContentTagsDto contentTagsDto) {
         log.debug("Deleting tags {} from the content {} by author {}.",

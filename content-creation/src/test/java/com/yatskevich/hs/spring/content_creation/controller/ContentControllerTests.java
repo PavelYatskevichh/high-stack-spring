@@ -1,18 +1,29 @@
 package com.yatskevich.hs.spring.content_creation.controller;
 
+import static com.yatskevich.hs.spring.content_creation.TestUtils.CONTENT_BODY;
+import static com.yatskevich.hs.spring.content_creation.TestUtils.CONTENT_DESCRIPTION;
+import static com.yatskevich.hs.spring.content_creation.TestUtils.CONTENT_ID_1;
+import static com.yatskevich.hs.spring.content_creation.TestUtils.CONTENT_ID_2;
+import static com.yatskevich.hs.spring.content_creation.TestUtils.CONTENT_TITLE;
+import static com.yatskevich.hs.spring.content_creation.TestUtils.TAG_ID_1;
+import static com.yatskevich.hs.spring.content_creation.TestUtils.TAG_ID_3;
+import static com.yatskevich.hs.spring.content_creation.TestUtils.USER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yatskevich.hs.spring.content_creation.AbstractTestcontainersTests;
 import com.yatskevich.hs.spring.content_creation.FileUtils;
+import com.yatskevich.hs.spring.content_creation.dto.ContentTagsDto;
 import com.yatskevich.hs.spring.content_creation.entity.Content;
+import com.yatskevich.hs.spring.content_creation.entity.Tag;
 import com.yatskevich.hs.spring.content_creation.repository.ContentRepository;
-import jakarta.validation.ValidationException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,21 +44,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Rollback
 public class ContentControllerTests extends AbstractTestcontainersTests {
 
-    public static final String USER_ID = "00000000-dddd-0000-0000-000000000001";
-    public static final String CONTENT_ID_1 = "11111111-dddd-1111-1111-111111111111";
-    public static final String CONTENT_ID_2 = "11111111-dddd-1111-1111-111111111112";
-    public static final String NEW_CONTENT_TITLE = "Content Title";
-    public static final String NEW_CONTENT_DESCRIPTION = "Content Description";
-    public static final String NEW_CONTENT_BODY = "Content Body";
-
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ContentRepository contentRepository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
-    @Sql({"classpath:scripts/insert_data_for_content_with_tags.sql"})
+    @Sql({"classpath:scripts/insert_contents.sql"})
     void getAll_ContentsExist_ReturnStatusOkAndAllContents() throws Exception {
         mockMvc.perform(get("/v1/contents").param("authorId", USER_ID))
             .andExpect(status().isOk())
@@ -55,7 +62,7 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
     }
 
     @Test
-    @Sql({"classpath:scripts/insert_data_for_content_with_tags.sql"})
+    @Sql({"classpath:scripts/insert_contents.sql"})
     void getById_ContentExist_ReturnStatusOkAndContent() throws Exception {
         mockMvc.perform(get("/v1/contents/{id}", CONTENT_ID_1).param("authorId", USER_ID))
             .andExpect(status().isOk())
@@ -83,29 +90,55 @@ public class ContentControllerTests extends AbstractTestcontainersTests {
 
         List<Content> contents = contentRepository.findAllByAuthorId(UUID.fromString(USER_ID));
         assertThat(contents).isNotNull();
-        Optional<Content> optional = contents.stream().max(Comparator.comparing(Content::getCreatedAt));
-        assertThat(optional).isPresent();
-        assertEquals(NEW_CONTENT_TITLE, optional.get().getTitle());
-        assertEquals(NEW_CONTENT_DESCRIPTION, optional.get().getDescription());
-        assertEquals(NEW_CONTENT_BODY, optional.get().getBody());
+        assertThat(contents).hasSize(1);
+        Content content = contents.getFirst();
+        assertEquals(CONTENT_TITLE, content.getTitle());
+        assertEquals(CONTENT_DESCRIPTION, content.getDescription());
+        assertEquals(CONTENT_BODY, content.getBody());
     }
 
-//    @Test
-//    @Sql({"classpath:scripts/insert_data_for_content_with_tags.sql"})
-//    void addTags_ValidRequestBody_ReturnStatusOk() throws Exception {
-//        mockMvc.perform(
-//                post("/v1/contents/tags").param("authorId", USER_ID)
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(FileUtils.getJsonAsString("classpath:json/createContent_request.json"))
-//            )
-//            .andExpect(status().isOk());
-//
-//        List<Content> contents = contentRepository.findAllByAuthorId(UUID.fromString(USER_ID));
-//        assertThat(contents).isNotNull();
-//        Optional<Content> optional = contents.stream().max(Comparator.comparing(Content::getCreatedAt));
-//        assertThat(optional).isPresent();
-//        assertEquals(NEW_CONTENT_TITLE, optional.get().getTitle());
-//        assertEquals(NEW_CONTENT_DESCRIPTION, optional.get().getDescription());
-//        assertEquals(NEW_CONTENT_BODY, optional.get().getBody());
-//    }
+    @Test
+    @Sql({"classpath:scripts/insert_contents.sql", "classpath:scripts/insert_tags.sql"})
+    void addTags_ValidRequestBody_ReturnStatusOk() throws Exception {
+        String json = FileUtils.getJsonAsString("classpath:json/addTagsToContent_request.json");
+
+        mockMvc.perform(
+                patch( "/v1/contents/tags").param("authorId", USER_ID)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json)
+            )
+            .andExpect(status().isOk());
+
+        ContentTagsDto contentTagsDto = objectMapper.readValue(json, ContentTagsDto.class);
+
+        Optional<Content> optional = contentRepository
+            .findByIdAndAuthorId(contentTagsDto.getId(), UUID.fromString(USER_ID));
+        assertThat(optional).isPresent();
+        assertEquals(optional.get().getTags().stream().map(Tag::getId).toList(), contentTagsDto.getTagIds());
+    }
+
+    @Test
+    @Sql({"classpath:scripts/insert_contents.sql", "classpath:scripts/insert_tags.sql",
+        "classpath:scripts/insert_content_and_tag_relations.sql"})
+    void removeTags_ValidRequestBodyAndContentHasTags_ReturnStatusNoContent() throws Exception {
+        String json = FileUtils.getJsonAsString("classpath:json/removeTagsFromContent_request.json");
+
+        mockMvc.perform(
+                delete( "/v1/contents/tags").param("authorId", USER_ID)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json)
+            )
+            .andExpect(status().isNoContent());
+
+        ContentTagsDto contentTagsDto = objectMapper.readValue(json, ContentTagsDto.class);
+
+        Optional<Content> optional = contentRepository
+            .findByIdAndAuthorId(contentTagsDto.getId(), UUID.fromString(USER_ID));
+        assertThat(optional).isPresent();
+        assertThat(optional.get().getTags().stream().map(Tag::getId).toList())
+            .containsExactlyInAnyOrder(
+                UUID.fromString(TAG_ID_1),
+                UUID.fromString(TAG_ID_3)
+            );
+    }
 }
