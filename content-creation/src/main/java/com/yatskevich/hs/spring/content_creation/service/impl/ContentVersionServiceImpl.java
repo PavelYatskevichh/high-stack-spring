@@ -70,7 +70,7 @@ public class ContentVersionServiceImpl implements ContentVersionService {
         UUID contentId = contentStatusDto.getId();
         ContentStatus status = contentStatusDto.getStatus();
 
-        if (status.equals(ContentStatus.APPROVED)) {
+        if (status.equals(ContentStatus.SUBMITTED)) {
             log.debug("Searching for the content {} in the database.", contentId);
             Content content = contentRepository.findById(contentId).orElseThrow(() -> {
                 log.error("The content {} is not found in the database.", contentId);
@@ -79,7 +79,7 @@ public class ContentVersionServiceImpl implements ContentVersionService {
             });
 
             applyLastRevisionToContent(content);
-            content.setStatus(ContentStatus.APPROVED);
+            content.setStatus(ContentStatus.SUBMITTED);
             contentRepository.save(content);
 
         } else {
