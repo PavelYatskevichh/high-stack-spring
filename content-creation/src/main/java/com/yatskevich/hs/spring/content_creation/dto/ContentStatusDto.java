@@ -12,6 +12,5 @@ import lombok.Setter;
 public class ContentStatusDto {
     @NotNull(message = "Content ID must not be null.")
     private UUID id;
-    @Pattern(regexp = "(?i)(draft)|(submitted)|(approved)|(rejected)", message = "Provided content status not exists.")
     private ContentStatus status;
 }
