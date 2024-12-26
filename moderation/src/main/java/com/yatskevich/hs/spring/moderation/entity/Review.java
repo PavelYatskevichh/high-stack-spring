@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -35,7 +37,7 @@ public class Review {
     private UUID id;
 
     @Column(name = "content_item_id", nullable = false)
-    private UUID contentItemId;
+    private UUID contentId;
 
     @Column(name = "reviewer_id", nullable = false)
     private UUID reviewerId;

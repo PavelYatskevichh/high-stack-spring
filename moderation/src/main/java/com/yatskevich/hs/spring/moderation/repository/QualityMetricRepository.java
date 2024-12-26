@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-interface QualityMetricRepository extends JpaRepository<QualityMetric, UUID> {
+public interface QualityMetricRepository extends JpaRepository<QualityMetric, UUID> {
 }
