@@ -28,7 +28,7 @@ public class Publication {
     private UUID id;
 
     @Column(name = "content_item_id", nullable = false)
-    private UUID contentItemId;
+    private UUID contentId;
 
     @Column(name = "moderator_id", nullable = false)
     private UUID moderatorId;
