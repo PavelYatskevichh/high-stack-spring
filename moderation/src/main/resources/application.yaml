@@ -3,9 +3,9 @@ spring:
     name: hs-spring-moderation
 
   datasource:
-    url: ${POSTGRES_URL}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/test_db}
+    username: ${POSTGRES_USERNAME:user}
+    password: ${POSTGRES_PASSWORD:pass}
 
   flyway:
     enabled: true
@@ -22,6 +22,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  threads:
+    virtual:
+      enabled: false
 
 server:
   servlet:
