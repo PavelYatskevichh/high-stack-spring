@@ -85,6 +85,5 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.save(review);
 
         //TODO add changing status in Content Creation module
-        //TODO add changing status in Content Creation module
     }
 }

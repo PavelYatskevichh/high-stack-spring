@@ -3,9 +3,9 @@ spring:
     name: hs-spring-moderation
 
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/test_db}
-    username: ${POSTGRES_USERNAME:user}
-    password: ${POSTGRES_PASSWORD:pass}
+    url: jdbc:postgresql://localhost:5432/test_db
+    username: user
+    password: pass
 
   flyway:
     enabled: true
@@ -30,3 +30,4 @@ spring:
 server:
   servlet:
     contextPath: /api
+  port: 8082

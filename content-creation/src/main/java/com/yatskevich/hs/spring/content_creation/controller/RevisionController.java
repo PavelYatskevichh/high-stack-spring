@@ -1,9 +1,8 @@
 package com.yatskevich.hs.spring.content_creation.controller;
 
-import com.yatskevich.hs.spring.content_creation.dto.RevisionDataDto;
-import com.yatskevich.hs.spring.content_creation.dto.RevisionDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.RevisionDataDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.RevisionDto;
 import com.yatskevich.hs.spring.content_creation.service.ContentVersionService;
-import com.yatskevich.hs.spring.content_creation.service.RevisionService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;

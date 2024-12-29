@@ -1,4 +1,4 @@
-package com.yatskevich.hs.spring.content_creation.dto;
+package com.yatskevich.hs.spring.content_creation.api_client.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;

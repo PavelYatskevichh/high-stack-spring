@@ -1,8 +1,7 @@
-package com.yatskevich.hs.spring.content_creation.dto;
+package com.yatskevich.hs.spring.content_creation.api_client.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.yatskevich.hs.spring.content_creation.entity.ContentStatus;
-import com.yatskevich.hs.spring.content_creation.entity.Tag;
+import jakarta.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -17,10 +16,12 @@ public class ContentDto {
     private String description;
     private String body;
     private UUID authorId;
-    private ContentStatus status;
+    @Pattern(regexp = "(?i)(draft)|(submitted)|(approved)|(rejected)",
+        message = "Provided content status does not exist.")
+    private String status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime createdAt;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime updatedAt;
-    private List<Tag> tags;
+    private List<TagDto> tags;
 }

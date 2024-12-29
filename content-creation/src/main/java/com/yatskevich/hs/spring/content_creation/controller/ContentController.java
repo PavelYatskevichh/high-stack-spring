@@ -1,9 +1,9 @@
 package com.yatskevich.hs.spring.content_creation.controller;
 
-import com.yatskevich.hs.spring.content_creation.dto.ContentDataDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentStatusDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentTagsDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentDataDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentStatusDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentTagsDto;
 import com.yatskevich.hs.spring.content_creation.service.ContentService;
 import com.yatskevich.hs.spring.content_creation.service.ContentVersionService;
 import jakarta.validation.Valid;
@@ -34,16 +34,15 @@ public class ContentController {
     private final ContentVersionService contentVersionService;
 
     @GetMapping
-    public List<ContentDto> getAll(@RequestParam UUID authorId) {
-        log.debug("Getting all the contents of the author {}.", authorId);
-        return contentService.getAll(authorId);
+    public List<ContentDto> getAll() {
+        log.debug("Getting all the contents.");
+        return contentService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ContentDto getById(@RequestParam UUID authorId,
-                              @PathVariable("id") UUID contentId) {
-        log.debug("Getting the content {} of the author {}.", contentId, authorId);
-        return contentService.getById(contentId, authorId);
+    public ContentDto getById(@PathVariable("id") UUID contentId) {
+        log.debug("Getting the content {}.", contentId);
+        return contentService.getById(contentId);
     }
 
     @PostMapping

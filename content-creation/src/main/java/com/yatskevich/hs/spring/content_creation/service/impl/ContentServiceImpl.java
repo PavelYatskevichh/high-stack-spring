@@ -1,9 +1,8 @@
 package com.yatskevich.hs.spring.content_creation.service.impl;
 
-import com.yatskevich.hs.spring.content_creation.dto.ContentDataDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentStatusDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentTagsDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentDataDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentTagsDto;
 import com.yatskevich.hs.spring.content_creation.entity.Content;
 import com.yatskevich.hs.spring.content_creation.entity.ContentStatus;
 import com.yatskevich.hs.spring.content_creation.entity.Tag;
@@ -11,7 +10,6 @@ import com.yatskevich.hs.spring.content_creation.mapper.ContentMapper;
 import com.yatskevich.hs.spring.content_creation.repository.ContentRepository;
 import com.yatskevich.hs.spring.content_creation.repository.TagRepository;
 import com.yatskevich.hs.spring.content_creation.service.ContentService;
-import com.yatskevich.hs.spring.content_creation.service.RevisionService;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,15 +35,25 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ContentDto> getAll(UUID authorId) {
-        log.debug("Searching for all the content of the author {} in the database.", authorId);
-        return contentMapper.toDtoList(contentRepository.findAllByAuthorId(authorId));
+    public List<ContentDto> getAll() {
+        log.debug("Searching for all the content in the database.");
+        return contentMapper.toDtoList(contentRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ContentDto getById(UUID contentId, UUID authorId) {
-        return contentMapper.toDto(findByIdAndAuthorIdOrElseThrow(contentId, authorId));
+    public ContentDto getById(UUID contentId) {
+        return contentMapper.toDto(findByIdOrElseThrow(contentId));
+    }
+
+    private Content findByIdOrElseThrow(UUID contentId) {
+        log.debug("Searching for the content {} in the database.", contentId);
+        return contentRepository.findById(contentId).orElseThrow(() -> {
+            log.error("The content {} is not found in the database.", contentId);
+            //FIXME create exception
+            return new RuntimeException("The content %s is not found in the database."
+                .formatted(contentId));
+        });
     }
 
     @Override

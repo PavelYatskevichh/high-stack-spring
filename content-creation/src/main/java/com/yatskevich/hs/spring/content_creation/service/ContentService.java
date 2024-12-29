@@ -1,17 +1,17 @@
 package com.yatskevich.hs.spring.content_creation.service;
 
-import com.yatskevich.hs.spring.content_creation.dto.ContentDataDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentDto;
-import com.yatskevich.hs.spring.content_creation.dto.ContentTagsDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentDataDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentDto;
+import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentTagsDto;
 import com.yatskevich.hs.spring.content_creation.entity.Content;
 import java.util.List;
 import java.util.UUID;
 
 public interface ContentService {
 
-    List<ContentDto> getAll(UUID authorId);
+    List<ContentDto> getAll();
 
-    ContentDto getById(UUID contentId, UUID authorId);
+    ContentDto getById(UUID contentId);
 
     Content findByIdAndAuthorIdOrElseThrow(UUID contentId, UUID authorId);
 
