@@ -40,6 +40,15 @@ tasks.bootJar {
     enabled = false
 }
 
+tasks.jar {
+    enabled = true
+    archiveClassifier.set("")
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)

@@ -1,6 +1,6 @@
 package com.yatskevich.hs.spring.distribution.service.impl;
 
-import com.yatskevich.hs.spring.content_creation.api_client.ContentCreationFeign;
+import com.yatskevich.hs.spring.content_creation.api_client.ContentFeign;
 import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentDto;
 import com.yatskevich.hs.spring.distribution.dto.PublicationDataDto;
 import com.yatskevich.hs.spring.distribution.dto.PublicationDto;
@@ -23,7 +23,7 @@ public class PublicationServiceImpl implements PublicationService {
 
     private final PublicationRepository publicationRepository;
     private final PublicationMapper publicationMapper;
-    private final ContentCreationFeign contentCreationFeign;
+    private final ContentFeign contentFeign;
 
     @Override
     @Transactional(readOnly = true)
@@ -51,7 +51,7 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public void create(PublicationDataDto publicationDataDto, UUID moderatorId) {
         UUID contentId = publicationDataDto.getContentId();
-        ContentDto content = contentCreationFeign.getById(contentId);
+        ContentDto content = contentFeign.getById(contentId);
 
         Publication publication = Publication.builder()
             .contentId(contentId)

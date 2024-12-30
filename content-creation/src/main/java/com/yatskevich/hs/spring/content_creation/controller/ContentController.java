@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/contents")
-public class ContentController {
+public class ContentController { //TODO try to implement ContentCreationFeign
 
     private final ContentService contentService;
     private final ContentVersionService contentVersionService;

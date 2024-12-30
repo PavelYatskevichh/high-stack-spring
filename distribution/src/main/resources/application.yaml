@@ -27,17 +27,7 @@ spring:
     virtual:
       enabled: false
 
-#  cloud:
-#    openfeign:
-#      lazy-attributes-resolution: true
-
 server:
   servlet:
     contextPath: /api
   port: 8083
-
-feign:
-  content-creation:
-    url: ${FEIGN_CONTENT_CREATION_URL:localhost:8081}
-    uri:
-      get-content: ${FEIGN_CONTENT_CREATION_URI_GET_CONTENT:/api/v1/contents}
