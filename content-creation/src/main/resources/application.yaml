@@ -3,9 +3,9 @@ spring:
     name: hs-spring-content-creation
 
   datasource:
-    url: ${POSTGRES_URL}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/test_db
+    username: user
+    password: pass
 
   flyway:
     enabled: true
@@ -22,3 +22,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  threads:
+    virtual:
+      enabled: false
+
+server:
+  servlet:
+    contextPath: /api
+  port: 8081
