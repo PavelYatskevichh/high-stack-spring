@@ -1,0 +1,86 @@
+name: high-stack
+services:
+  content-creation:
+    image: content-creation
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        JAR_FILE: content-creation/build/libs/app.jar
+        MODULE_NAME: content-creation
+    environment:
+      APPLICATION_CLASS: com.yatskevich.hs.spring.content_creation.ContentCreationApplication
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
+      SPRING_DATASOURCE_USERNAME: docker_username
+      SPRING_DATASOURCE_PASSWORD: docker_password
+      SPRING_THREADS_VIRTUAL_ENABLED: false
+      SERVER_PORT: 8080
+    ports:
+      - "8081:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - hs-network
+  moderation:
+    image: moderation
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        JAR_FILE: moderation/build/libs/app.jar
+        MODULE_NAME: moderation
+    environment:
+      APPLICATION_CLASS: com.yatskevich.hs.spring.moderation.ModerationApplication
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
+      SPRING_DATASOURCE_USERNAME: docker_username
+      SPRING_DATASOURCE_PASSWORD: docker_password
+      SPRING_THREADS_VIRTUAL_ENABLED: false
+      SERVER_PORT: 8080
+    ports:
+      - "8082:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - hs-network
+  distribution:
+    image: distribution
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        JAR_FILE: distribution/build/libs/app.jar
+        MODULE_NAME: distribution
+    environment:
+      APPLICATION_CLASS: com.yatskevich.hs.spring.distribution.DistributionApplication
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
+      SPRING_DATASOURCE_USERNAME: docker_username
+      SPRING_DATASOURCE_PASSWORD: docker_password
+      SPRING_THREADS_VIRTUAL_ENABLED: false
+      SERVER_PORT: 8080
+    ports:
+      - "8083:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - hs-network
+  postgres:
+    image: postgres:16.2
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: docker_username
+      POSTGRES_PASSWORD: docker_password
+    restart: unless-stopped
+    healthcheck:
+      test: pg_isready -U docker_username -d database
+      interval: 10s
+      retries: 3
+      start_period: 15s
+      timeout: 10s
+    networks:
+      - hs-network
+networks:
+  hs-network:
+    name: hs-network
