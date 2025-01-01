@@ -89,6 +89,7 @@ public class ReviewServiceImpl implements ReviewService {
             reviewDataDto.getContentId(), reviewerId);
         reviewRepository.save(review);
 
+        //TODO send to kafka
         contentFeign.updateStatus(newContentStatusDto(reviewDataDto));
     }
 
