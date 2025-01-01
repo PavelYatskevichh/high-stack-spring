@@ -53,6 +53,10 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok")
 }
 
+tasks.bootJar {
+    archiveFileName.set("app.jar")
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
