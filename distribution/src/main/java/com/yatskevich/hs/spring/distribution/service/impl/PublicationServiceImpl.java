@@ -51,6 +51,7 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public void create(PublicationDataDto publicationDataDto, UUID moderatorId) {
         UUID contentId = publicationDataDto.getContentId();
+        //TODO poll from kafka by schedule
         ContentDto content = contentFeign.getById(contentId);
 
         Publication publication = Publication.builder()
