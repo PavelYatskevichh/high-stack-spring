@@ -20,6 +20,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,10 @@ public class ReviewServiceImpl implements ReviewService {
     private final QualityMetricService qualityMetricService;
     private final ReviewMapper reviewMapper;
     private final ContentFeign contentFeign;
+    private final KafkaTemplate<String, ContentStatusDto> kafkaTemplate;
+
+    @Value(value = "${kafka.topic}")
+    private String kafkaTopic;
 
     @Override
     @Transactional(readOnly = true)
@@ -90,7 +96,7 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.save(review);
 
         //TODO send to kafka
-        contentFeign.updateStatus(newContentStatusDto(reviewDataDto));
+        kafkaTemplate.send(kafkaTopic, newContentStatusDto(reviewDataDto));
     }
 
     private ContentStatusDto newContentStatusDto(ReviewDataDto reviewDataDto) {

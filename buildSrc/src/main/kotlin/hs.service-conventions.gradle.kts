@@ -32,7 +32,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
-//    implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.springframework.kafka:spring-kafka")
     implementation("org.mapstruct:mapstruct:${mapstructVersion}")
 
     compileOnly("org.projectlombok:lombok")
