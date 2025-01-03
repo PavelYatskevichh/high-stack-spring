@@ -1,10 +1,9 @@
 package com.yatskevich.hs.spring.moderation.service.impl;
 
-import com.yatskevich.hs.spring.content_creation.api_client.ContentFeign;
 import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentStatusDto;
+import com.yatskevich.hs.spring.moderation.dto.QualityMetricIdWithScoreDto;
 import com.yatskevich.hs.spring.moderation.dto.ReviewDataDto;
 import com.yatskevich.hs.spring.moderation.dto.ReviewDto;
-import com.yatskevich.hs.spring.moderation.dto.QualityMetricIdWithScoreDto;
 import com.yatskevich.hs.spring.moderation.entity.QualityMetric;
 import com.yatskevich.hs.spring.moderation.entity.Review;
 import com.yatskevich.hs.spring.moderation.entity.ReviewQualityMetric;
@@ -12,6 +11,7 @@ import com.yatskevich.hs.spring.moderation.entity.ReviewQualityMetricId;
 import com.yatskevich.hs.spring.moderation.entity.ReviewStatus;
 import com.yatskevich.hs.spring.moderation.mapper.ReviewMapper;
 import com.yatskevich.hs.spring.moderation.repository.ReviewRepository;
+import com.yatskevich.hs.spring.moderation.service.KafkaService;
 import com.yatskevich.hs.spring.moderation.service.QualityMetricService;
 import com.yatskevich.hs.spring.moderation.service.ReviewService;
 import java.util.List;
@@ -20,8 +20,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +33,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final QualityMetricService qualityMetricService;
     private final ReviewMapper reviewMapper;
-    private final ContentFeign contentFeign;
-    private final KafkaTemplate<String, ContentStatusDto> kafkaTemplate;
-
-    @Value(value = "${kafka.topic}")
-    private String kafkaTopic;
+    private final KafkaService kafkaService;
 
     @Override
     @Transactional(readOnly = true)
@@ -95,8 +89,7 @@ public class ReviewServiceImpl implements ReviewService {
             reviewDataDto.getContentId(), reviewerId);
         reviewRepository.save(review);
 
-        //TODO send to kafka
-        kafkaTemplate.send(kafkaTopic, newContentStatusDto(reviewDataDto));
+        kafkaService.sendMessageUpdateContentStatus(newContentStatusDto(reviewDataDto));
     }
 
     private ContentStatusDto newContentStatusDto(ReviewDataDto reviewDataDto) {

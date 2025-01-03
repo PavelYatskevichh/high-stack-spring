@@ -34,4 +34,4 @@ server:
 
 kafka:
   bootstrap-servers: localhost:9092
-  topic: mytopic
+  topic: hs-spring
