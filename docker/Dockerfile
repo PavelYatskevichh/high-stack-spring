@@ -11,10 +11,11 @@ RUN mkdir -p /usr/$MODULE_NAME/artifacts && (cd /usr/$MODULE_NAME/artifacts; jar
 FROM eclipse-temurin:21-jre-alpine
 
 ARG MODULE_NAME
+ARG APPLICATION_CLASS
 
 ENV MODULE_NAME=$MODULE_NAME
-ENV APPLICATION_CLASS ""
-ENV JAVA_OPTS ""
+ENV APPLICATION_CLASS=$APPLICATION_CLASS
+ENV JAVA_OPTS=""
 
 COPY --from=build /usr/$MODULE_NAME/artifacts/BOOT-INF/lib /usr/$MODULE_NAME/lib
 COPY --from=build /usr/$MODULE_NAME/artifacts/META-INF /usr/$MODULE_NAME/META-INF

@@ -8,8 +8,8 @@ services:
       args:
         JAR_FILE: content-creation/build/libs/app.jar
         MODULE_NAME: content-creation
+        APPLICATION_CLASS: com.yatskevich.hs.spring.content_creation.ContentCreationApplication
     environment:
-      APPLICATION_CLASS: com.yatskevich.hs.spring.content_creation.ContentCreationApplication
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
       SPRING_DATASOURCE_USERNAME: docker_username
       SPRING_DATASOURCE_PASSWORD: docker_password
