@@ -34,6 +34,7 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.springframework.kafka:spring-kafka")
     implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    implementation(project(":kafka-messaging"))
 
     compileOnly("org.projectlombok:lombok")
 
