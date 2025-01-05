@@ -1,4 +1,4 @@
-INSERT INTO distribution.publications (id, content_item_id, moderator_id, title, body, published_at)
+INSERT INTO distribution.publications (id, content_item_id, publisher_id, title, body, published_at)
 VALUES
     ('44444444-4444-4444-4444-444444444441', '11111111-1111-1111-1111-111111111112', '00000000-0000-0000-0000-000000000002', 'The Future of Renewable Energy',
      'Renewable energy sources, such as wind, solar, and hydro, are reshaping the global energy landscape. Learn how these technologies are becoming more efficient and accessible.', CURRENT_TIMESTAMP),

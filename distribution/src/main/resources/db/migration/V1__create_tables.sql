@@ -1,7 +1,7 @@
 CREATE TABLE distribution.publications (
     id UUID PRIMARY KEY,
     content_item_id UUID NOT NULL,
-    moderator_id UUID NOT NULL,
+    publisher_id UUID NOT NULL,
     title VARCHAR(255) NOT NULL,
     body TEXT NOT NULL,
     published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

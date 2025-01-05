@@ -21,28 +21,29 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/reviews")
-public class ReviewController {
+@RequestMapping("/v1/publications")
+public class PublicationController {
 
     private final PublicationService publicationService;
 
     @GetMapping
     public List<PublicationDto> getAll() {
-        log.debug("Getting all the reviews.");
+        log.debug("Getting all the publications.");
         return publicationService.getAll();
     }
 
     @GetMapping("/{id}")
     public PublicationDto getById(@PathVariable("id") UUID publicationId) {
-        log.debug("Getting the review {}.", publicationId);
+        log.debug("Getting the publication {}.", publicationId);
         return publicationService.getById(publicationId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestParam UUID moderatorId,
+    public void create(@RequestParam UUID publisherId,
                        @RequestBody @Valid PublicationDataDto publicationDataDto) {
-        log.debug("Creating new review for the content {} by reviewer {}.", publicationDataDto.getContentId(), moderatorId);
-        publicationService.create(publicationDataDto, moderatorId);
+        log.debug("Creating new publication for the content {} by publisher {}.",
+            publicationDataDto.getContentId(), publisherId);
+        publicationService.create(publicationDataDto, publisherId);
     }
 }
