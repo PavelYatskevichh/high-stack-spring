@@ -10,5 +10,5 @@ public interface PublicationService {
 
     PublicationDto getById(UUID publicationId);
 
-    void create(PublicationDataDto publicationDataDto, UUID publisherId);
+    void create(PublicationDataDto publicationDataDto);
 }

@@ -11,7 +11,7 @@ SELECT gen_random_uuid() -- Don't need EXTENSION "uuid-ossp"
 CREATE SCHEMA IF NOT EXISTS auth;
 
 CREATE TYPE auth.user_roles
-	AS ENUM ('AUTHOR', 'PUBLISHER', 'REVIEWER');
+	AS ENUM ('AUTHOR', 'ADMIN', 'REVIEWER');
 
 CREATE TABLE auth.users (
     id UUID PRIMARY KEY,
@@ -25,7 +25,7 @@ CREATE TABLE auth.users (
 INSERT INTO auth.users (id, first_name, last_name, email, role, created_at)
 VALUES
     ('00000000-0000-0000-0000-000000000001', 'Alice', 'Author', 'alice.author@example.com', 'AUTHOR', CURRENT_TIMESTAMP),
-    ('00000000-0000-0000-0000-000000000002', 'Bob', 'Publisher', 'bob.publisher@example.com', 'PUBLISHER', CURRENT_TIMESTAMP),
+    ('00000000-0000-0000-0000-000000000002', 'Bob', 'Admin', 'bob.admin@example.com', 'ADMIN', CURRENT_TIMESTAMP),
     ('00000000-0000-0000-0000-000000000003', 'Charlie', 'Reviewer', 'charlie.reviewer@example.com', 'REVIEWER', CURRENT_TIMESTAMP);
 
 ---
