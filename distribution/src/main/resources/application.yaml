@@ -35,3 +35,5 @@ server:
 kafka:
   bootstrap-servers: localhost:9092
   topic: hs-spring
+  group-id: Distribution
+  trustedPackages: com.yatskevich.hs.spring.content_creation.api_client.dto

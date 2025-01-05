@@ -8,7 +8,6 @@ import com.yatskevich.hs.spring.moderation.entity.QualityMetric;
 import com.yatskevich.hs.spring.moderation.entity.Review;
 import com.yatskevich.hs.spring.moderation.entity.ReviewQualityMetric;
 import com.yatskevich.hs.spring.moderation.entity.ReviewQualityMetricId;
-import com.yatskevich.hs.spring.moderation.entity.ReviewStatus;
 import com.yatskevich.hs.spring.moderation.mapper.ReviewMapper;
 import com.yatskevich.hs.spring.moderation.repository.ReviewRepository;
 import com.yatskevich.hs.spring.moderation.service.KafkaService;
@@ -29,7 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ReviewServiceImpl implements ReviewService {
 
-    public static final String CONTENT_STATUS_DRAFT = "DRAFT";
+    private static final String CONTENT_STATUS_APPROVED = "APPROVED";
+    private static final String CONTENT_STATUS_REJECTED = "REJECTED";
+    private static final String CONTENT_STATUS_DRAFT = "DRAFT";
     private final ReviewRepository reviewRepository;
     private final QualityMetricService qualityMetricService;
     private final ReviewMapper reviewMapper;
@@ -96,8 +97,8 @@ public class ReviewServiceImpl implements ReviewService {
         ContentStatusDto contentStatusDto = new ContentStatusDto();
         contentStatusDto.setId(reviewDataDto.getContentId());
         contentStatusDto.setStatus(switch (reviewDataDto.getStatus()) {
-            case APPROVED -> ReviewStatus.APPROVED.name();
-            case REJECTED -> ReviewStatus.REJECTED.name();
+            case APPROVED -> CONTENT_STATUS_APPROVED;
+            case REJECTED -> CONTENT_STATUS_REJECTED;
             case NEEDS_REVISION -> CONTENT_STATUS_DRAFT;
             default -> throw new RuntimeException("There is no such Content Status: %s."
                 .formatted(reviewDataDto.getStatus()));
