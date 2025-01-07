@@ -17,12 +17,12 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 public class KafkaProducerConfig {
 
     @Value(value = "${kafka.bootstrap-servers}")
-    private String bootstrapAddress;
+    private String bootstrapServers;
 
     @Bean
     public ProducerFactory<String, ContentStatusDto> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
