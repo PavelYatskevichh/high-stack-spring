@@ -10,14 +10,8 @@ services:
         JAR_FILE: content-creation/build/libs/app.jar
         MODULE_NAME: content-creation
         APPLICATION_CLASS: com.yatskevich.hs.spring.content_creation.ContentCreationApplication
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
-      SPRING_DATASOURCE_USERNAME: docker_username
-      SPRING_DATASOURCE_PASSWORD: docker_password
-      SPRING_THREADS_VIRTUAL_ENABLED: false
-      SERVER_PORT: 8080
-      LOGGING_LEVEL_COM_YATSKEVICH: DEBUG
-      KAFKA_BOOTSTRAPSERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
+    env_file:
+      - "../service-docker.env"
     ports:
       - "8081:8080"
     depends_on:
@@ -41,14 +35,8 @@ services:
         JAR_FILE: moderation/build/libs/app.jar
         MODULE_NAME: moderation
         APPLICATION_CLASS: com.yatskevich.hs.spring.moderation.ModerationApplication
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
-      SPRING_DATASOURCE_USERNAME: docker_username
-      SPRING_DATASOURCE_PASSWORD: docker_password
-      SPRING_THREADS_VIRTUAL_ENABLED: false
-      SERVER_PORT: 8080
-      LOGGING_LEVEL_COM_YATSKEVICH: DEBUG
-      KAFKA_BOOTSTRAPSERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
+    env_file:
+      - "../service-docker.env"
     ports:
       - "8082:8080"
     depends_on:
@@ -72,15 +60,8 @@ services:
         JAR_FILE: distribution/build/libs/app.jar
         MODULE_NAME: distribution
         APPLICATION_CLASS: com.yatskevich.hs.spring.distribution.DistributionApplication
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
-      SPRING_DATASOURCE_USERNAME: docker_username
-      SPRING_DATASOURCE_PASSWORD: docker_password
-      SPRING_THREADS_VIRTUAL_ENABLED: false
-      SERVER_PORT: 8080
-      LOGGING_LEVEL_COM_YATSKEVICH: DEBUG
-      KAFKA_BOOTSTRAPSERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
-      FEIGN_CONTENT_CREATION_URL: content-creation:8080
+    env_file:
+      - "../service-docker.env"
     ports:
       - "8083:8080"
     depends_on:
@@ -103,12 +84,8 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-controller-1:9093,2@kafka-controller-2:9093,3@kafka-controller-3:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
+    env_file:
+      - "../kafka-docker.env"
     networks:
       - hs-network
 
@@ -120,12 +97,8 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-controller-1:9093,2@kafka-controller-2:9093,3@kafka-controller-3:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
+    env_file:
+      - "../kafka-docker.env"
     networks:
       - hs-network
 
@@ -137,12 +110,8 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-controller-1:9093,2@kafka-controller-2:9093,3@kafka-controller-3:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
+    env_file:
+      - "../kafka-docker.env"
     networks:
       - hs-network
 
@@ -156,12 +125,8 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-controller-1:9093,2@kafka-controller-2:9093,3@kafka-controller-3:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
+    env_file:
+      - "../kafka-docker.env"
     healthcheck:
       test: /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
       start_period: 5s
@@ -185,12 +150,8 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-controller-1:9093,2@kafka-controller-2:9093,3@kafka-controller-3:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
+    env_file:
+      - "../kafka-docker.env"
     healthcheck:
       test: /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
       start_period: 5s
@@ -214,12 +175,8 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-controller-1:9093,2@kafka-controller-2:9093,3@kafka-controller-3:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
+    env_file:
+      - "../kafka-docker.env"
     healthcheck:
       test: /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
       start_period: 5s
