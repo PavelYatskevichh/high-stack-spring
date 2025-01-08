@@ -32,8 +32,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
-//    implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.springframework.kafka:spring-kafka")
     implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    implementation(project(":kafka-messaging"))
 
     compileOnly("org.projectlombok:lombok")
 
@@ -51,6 +52,10 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testAnnotationProcessor("org.projectlombok:lombok")
+}
+
+tasks.bootJar {
+    archiveFileName.set("app.jar")
 }
 
 tasks.withType<Test> {

@@ -31,3 +31,8 @@ server:
   servlet:
     contextPath: /api
   port: 8081
+
+kafka:
+  bootstrapServers: localhost:9092
+  topic: hs-spring
+  groupId: ContentCreation

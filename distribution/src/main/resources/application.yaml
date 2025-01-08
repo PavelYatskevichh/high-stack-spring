@@ -31,3 +31,8 @@ server:
   servlet:
     contextPath: /api
   port: 8083
+
+kafka:
+  bootstrapServers: localhost:9092
+  topic: hs-spring
+  groupId: Distribution

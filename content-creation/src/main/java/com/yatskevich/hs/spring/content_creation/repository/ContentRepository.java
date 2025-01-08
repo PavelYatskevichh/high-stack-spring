@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -21,6 +22,7 @@ public interface ContentRepository extends JpaRepository<Content, UUID> {
         SET status = :status
         WHERE id = :id
         """)
+    @Modifying
     void updateStatus(@Param("id") UUID id,
                       @Param("status") ContentStatus status);
 }

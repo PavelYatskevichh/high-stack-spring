@@ -68,7 +68,7 @@ public class ContentVersionServiceImpl implements ContentVersionService {
     @Override
     public void updateStatus(ContentStatusDto contentStatusDto) {
         UUID contentId = contentStatusDto.getId();
-        ContentStatus status = ContentStatus.valueOf(contentStatusDto.getStatus());
+        ContentStatus status = ContentStatus.valueOf(contentStatusDto.getStatus().toUpperCase());
 
         if (status.equals(ContentStatus.SUBMITTED)) {
             log.debug("Searching for the content {} in the database.", contentId);
