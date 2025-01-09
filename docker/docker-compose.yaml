@@ -2,7 +2,7 @@ name: high-stack
 services:
 
   content-creation:
-    image: content-creation
+    image: hs/content-creation
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
@@ -11,7 +11,7 @@ services:
         MODULE_NAME: content-creation
         APPLICATION_CLASS: com.yatskevich.hs.spring.content_creation.ContentCreationApplication
     env_file:
-      - "../service-docker.env"
+      - "service-docker.env"
     ports:
       - "8081:8080"
     depends_on:
@@ -27,7 +27,7 @@ services:
       - hs-network
 
   moderation:
-    image: moderation
+    image: hs/moderation
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
@@ -36,7 +36,7 @@ services:
         MODULE_NAME: moderation
         APPLICATION_CLASS: com.yatskevich.hs.spring.moderation.ModerationApplication
     env_file:
-      - "../service-docker.env"
+      - "service-docker.env"
     ports:
       - "8082:8080"
     depends_on:
@@ -52,7 +52,7 @@ services:
       - hs-network
 
   distribution:
-    image: distribution
+    image: hs/distribution
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
@@ -61,7 +61,7 @@ services:
         MODULE_NAME: distribution
         APPLICATION_CLASS: com.yatskevich.hs.spring.distribution.DistributionApplication
     env_file:
-      - "../service-docker.env"
+      - "service-docker.env"
     ports:
       - "8083:8080"
     depends_on:
@@ -85,7 +85,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
     env_file:
-      - "../kafka-docker.env"
+      - "kafka-docker.env"
     networks:
       - hs-network
 
@@ -98,7 +98,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
     env_file:
-      - "../kafka-docker.env"
+      - "kafka-docker.env"
     networks:
       - hs-network
 
@@ -111,7 +111,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
     env_file:
-      - "../kafka-docker.env"
+      - "kafka-docker.env"
     networks:
       - hs-network
 
@@ -126,7 +126,7 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
     env_file:
-      - "../kafka-docker.env"
+      - "kafka-docker.env"
     healthcheck:
       test: /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
       start_period: 5s
@@ -151,7 +151,7 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
     env_file:
-      - "../kafka-docker.env"
+      - "kafka-docker.env"
     healthcheck:
       test: /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
       start_period: 5s
@@ -176,7 +176,7 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
     env_file:
-      - "../kafka-docker.env"
+      - "kafka-docker.env"
     healthcheck:
       test: /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
       start_period: 5s
