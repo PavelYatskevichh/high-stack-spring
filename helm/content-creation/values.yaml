@@ -2,10 +2,36 @@ autoscaling.enabled: false
 replicaCount: 1
 podAnnotations: {}
 podLabels: {}
+serviceAccountName: hs-spring-sa
+image:
+  name: hs/content-creation
 resources:
   requests:
-    cpu: 500m
-    memory: 1Gi
+    cpu: 50m
+    memory: 128Mi
   limits:
-    cpu: 500m
-    memory: 1Gi
+    cpu: 250m
+    memory: 512Mi
+
+database:
+  clusterName: postgres
+  name: test-db
+  url: &databaseUrl jdbc:postgresql://postgres-rw.hs-spring:5432/test-db
+  username: &databaseUsername k8s-user
+  password: &databasePassword k8s-password
+
+appConfig:
+  spring:
+    datasource:
+      url: *databaseUrl
+      username: *databaseUsername
+      password: *databasePassword
+    threads:
+      virtual:
+        enabled: false
+  server:
+    port: 8080
+  logging:
+    level:
+      com:
+        yatskevich: DEBUG

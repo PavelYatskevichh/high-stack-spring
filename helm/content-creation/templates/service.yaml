@@ -1,18 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
+  name: {{ include "my-chart.fullname" . }}-svc
   labels:
-    app: content-creation
-  name: content-creation
+    {{- include "my-chart.labels" . | nindent 4 }}
 spec:
-  ports:
-  8080-8080
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
-  selector:
-    app: content-creation
   type: ClusterIP
-status:
-  loadBalancer: {}
+  ports:
+    - name: http
+      protocol: TCP
+      port: {{ default 8080 (.Values.container).port }}
+      targetPort: {{ default 8080 (.Values.appConfig.server).port }}
+  selector:
+    {{- include "my-chart.selectorLabels" . | nindent 4 }}
