@@ -1,0 +1,12 @@
+database:
+  clusterName: postgres
+  name: test-db
+  instances: 1
+  username: &databaseUsername k8s-user
+  password: &databasePassword k8s-password
+
+appConfig:
+  spring:
+    datasource:
+      username: *databaseUsername
+      password: *databasePassword

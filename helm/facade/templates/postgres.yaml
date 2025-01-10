@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.database.clusterName }}
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.2
-  instances: 1
+  instances: {{ default 1 .Values.database.instances }}
 
   bootstrap:
     initdb:

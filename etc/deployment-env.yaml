@@ -1,0 +1,16 @@
+#          env:
+#            - name: SPRING_DATASOURCE_URL
+#              valueFrom:
+#                secretKeyRef:
+#                  name: {{ .Values.database.name }}-app
+#                  key: jdbc-uri
+#            - name: SPRING_DATASOURCE_USERNAME
+#              valueFrom:
+#                secretKeyRef:
+#                  name: {{ .Values.database.name }}-app
+#                  key: username
+#            - name: SPRING_DATASOURCE_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: {{ .Values.database.name }}-app
+#                  key: password

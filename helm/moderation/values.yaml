@@ -2,7 +2,7 @@ autoscaling.enabled: false
 replicaCount: 1
 podAnnotations: {}
 podLabels: {}
-serviceAccountName: hs-spring-content-creation-sa
+serviceAccountName: hs-spring-moderation-sa
 image:
   name: hs/content-creation
 resources:

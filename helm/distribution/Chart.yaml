@@ -1,7 +1,7 @@
 apiVersion: v2
 kubeVersion: ">=1.14.0-0"
 type: application
-name: content-creation
+name: distribution
 description: Part of hs
 version: 0.0.1
 appVersion: "0.0.1"
