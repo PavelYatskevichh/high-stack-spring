@@ -1,0 +1,5 @@
+1. Add JpaSpecifications for filtering in request params.
+
+2. Configure Strimzi operator to monitor all namespaces.
+https://github.com/strimzi/strimzi-kafka-operator/issues/1292
+https://strimzi.io/docs/operators/in-development/full/quickstart.html

@@ -11,7 +11,7 @@ data:
   {{- if (.Values.appConfig.logging.level.com).yatskevich }}
   LOGGING_LEVEL_COM_YATSKEVICH: {{ .Values.appConfig.logging.level.com.yatskevich | quote }}
   {{- end }}
-  {{- if (.Values.appConfig.kafka).bootstrapServers }}
-  KAFKA_BOOTSTRAPSERVERS: {{ .Values.appConfig.kafka.bootstrapServers | quote }}
+  {{- if (.Values.appConfig.kafka).bootstrapServersPattern }}
+  KAFKA_BOOTSTRAPSERVERS: {{ printf .Values.appConfig.kafka.bootstrapServersPattern .Release.Namespace | quote }}
   {{- end }}
 {{- end }}

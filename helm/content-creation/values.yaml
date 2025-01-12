@@ -24,3 +24,5 @@ appConfig:
     level:
       com:
         yatskevich: DEBUG
+  kafka:
+    bootstrapServersPattern: kafka-cluster-kafka-bootstrap.%s:9092

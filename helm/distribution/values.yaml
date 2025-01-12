@@ -4,7 +4,7 @@ podAnnotations: {}
 podLabels: {}
 serviceAccountName: hs-spring-distribution-sa
 image:
-  name: hs/content-creation
+  name: hs/distribution
 resources:
   requests:
     cpu: 50m
@@ -24,3 +24,5 @@ appConfig:
     level:
       com:
         yatskevich: DEBUG
+  kafka:
+    bootstrapServersPattern: kafka-cluster-kafka-bootstrap.%s:9092
