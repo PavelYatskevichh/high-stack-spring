@@ -30,20 +30,18 @@ fi
 #if all_images_found; then
 
 
-echo "Checking for installed cloudnative-pg operator ..."
-if ! kubectl get pod -l app.kubernetes.io/name=cloudnative-pg --all-namespaces > /dev/null; then
+#echo "Checking for installed cloudnative-pg operator ..."
+#if ! kubectl get pod -l app.kubernetes.io/name=cloudnative-pg --all-namespaces 2> /dev/null; then
   echo "Installing cloudnative-pg operator ..."
   kubectl apply --server-side -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.25/releases/cnpg-1.25.0.yaml
-else
-  echo "Cloudnative-pg operator is already installed."
-fi
+#fi
 
-echo "Checking for installed strimzi-cluster-operator ..."
-if ! kubectl get pod -l name=strimzi-cluster-operator --all-namespaces > /dev/null; then
+#echo "Checking for installed strimzi-cluster-operator ..."
+#if ! kubectl get pod -l name=strimzi-cluster-operator --all-namespaces 2> /dev/null; then
   kubectl create namespace "$STRIMZI_NAMESPACE"
   echo "Installing strimzi-cluster-operator ..."
   kubectl create -f "https://strimzi.io/install/latest?namespace=$STRIMZI_NAMESPACE" -n "$STRIMZI_NAMESPACE"
-fi
+#fi
 
 kubectl wait pod --all --for=condition=ready --timeout="$TIMEOUT" -l app.kubernetes.io/name=cloudnative-pg --all-namespaces
 echo "Cloudnative-pg operator is installed."

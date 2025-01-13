@@ -42,6 +42,11 @@ spec:
                 name: {{ include "hs-chart.fullname" . }}-config
             - configMapRef:
                 name: hs-spring-high-stack-facade-datasource-config
+          env:
+            {{- range $key, $value := (.Values.additional).env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}

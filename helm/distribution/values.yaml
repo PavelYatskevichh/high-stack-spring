@@ -26,3 +26,7 @@ appConfig:
         yatskevich: DEBUG
   kafka:
     bootstrapServersPattern: kafka-cluster-kafka-bootstrap.%s:9092
+
+additional:
+  env:
+    FEIGN_CONTENT_CREATION_URL: hs-spring-content-creation-svc.high-stack:8080
