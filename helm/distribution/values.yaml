@@ -1,0 +1,32 @@
+autoscaling.enabled: false
+replicaCount: 1
+podAnnotations: {}
+podLabels: {}
+serviceAccountName: hs-spring-distribution-sa
+image:
+  name: hs/distribution
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 512Mi
+
+appConfig:
+  spring:
+    threads:
+      virtual:
+        enabled: false
+  server:
+    port: 8080
+  logging:
+    level:
+      com:
+        yatskevich: DEBUG
+  kafka:
+    bootstrapServersPattern: kafka-cluster-kafka-bootstrap.%s:9092
+
+additional:
+  env:
+    FEIGN_CONTENT_CREATION_URL: hs-spring-content-creation-svc.high-stack:8080

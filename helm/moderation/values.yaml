@@ -1,0 +1,28 @@
+autoscaling.enabled: false
+replicaCount: 1
+podAnnotations: {}
+podLabels: {}
+serviceAccountName: hs-spring-moderation-sa
+image:
+  name: hs/moderation
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 512Mi
+
+appConfig:
+  spring:
+    threads:
+      virtual:
+        enabled: false
+  server:
+    port: 8080
+  logging:
+    level:
+      com:
+        yatskevich: DEBUG
+  kafka:
+    bootstrapServersPattern: kafka-cluster-kafka-bootstrap.%s:9092

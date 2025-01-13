@@ -1,0 +1,23 @@
+database:
+  clusterName: postgres
+  name: test-db
+  instances: 1
+  username: &databaseUsername k8s-user
+  password: &databasePassword k8s-password
+
+kafka:
+  clusterName: kafka
+  config:
+    offsets.topic.replication.factor: 3
+    transaction.state.log.replication.factor: 3
+    transaction.state.log.min.isr: 2
+    group.initial.rebalance.delay.ms: 0
+    num.partitions: 3
+    default.replication.factor: 3
+    min.insync.replicas: 2
+
+appConfig:
+  spring:
+    datasource:
+      username: *databaseUsername
+      password: *databasePassword

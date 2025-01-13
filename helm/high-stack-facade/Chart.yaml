@@ -1,0 +1,20 @@
+apiVersion: v2
+kubeVersion: ">=1.14.0-0"
+type: application
+name: high-stack-facade
+description: Facade helm chart of High-stack
+version: 0.0.1
+
+dependencies:
+  - name: hs-chart
+    version: 0.0.1
+    repository: "file://../hs-chart"
+  - name: content-creation
+    version: 0.0.1
+    repository: "file://../content-creation"
+  - name: moderation
+    version: 0.0.1
+    repository: "file://../moderation"
+  - name: distribution
+    version: 0.0.1
+    repository: "file://../distribution"

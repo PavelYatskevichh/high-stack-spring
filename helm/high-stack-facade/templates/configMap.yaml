@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hs-chart.fullname" . }}-datasource-config
+  labels:
+    {{- include "hs-chart.labels" . | nindent 4 }}
+data:
+  SPRING_DATASOURCE_URL: {{ printf "jdbc:postgresql://%s-rw.%s:5432/%s" .Values.database.clusterName .Release.Namespace .Values.database.name | quote }}
+  SPRING_DATASOURCE_USERNAME: {{ required "'appConfig.spring.datasource.username' parameter is required" $.Values.appConfig.spring.datasource.username | quote }}
+  SPRING_DATASOURCE_PASSWORD: {{ required "'appConfig.spring.datasource.password' parameter is required" $.Values.appConfig.spring.datasource.password | quote }}

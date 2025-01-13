@@ -1,0 +1,6 @@
+apiVersion: v2
+kubeVersion: ">=1.14.0-0"
+type: library
+name: hs-chart
+description: High-stack common helm chart
+version: 0.0.1

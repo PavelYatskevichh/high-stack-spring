@@ -1,0 +1,12 @@
+apiVersion: v2
+kubeVersion: ">=1.14.0-0"
+type: application
+name: content-creation
+description: Part of hs
+version: 0.0.1
+appVersion: "0.0.1"
+
+dependencies:
+  - name: hs-chart
+    version: 0.0.1
+    repository: "file://../hs-chart"
