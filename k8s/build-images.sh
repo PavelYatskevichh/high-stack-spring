@@ -14,11 +14,12 @@ for image in "${required_images[@]}"; do
     if ! grep -q "$image" <<< "$images"; then
         echo "Image '$image' is not found in minikube."
         all_images_found=false
-        return
+        break
     fi
 done
 
 if ! $all_images_found; then
+  ./gradlew clean
   ./gradlew build
   docker compose -f docker/docker-compose.yaml build
   for image in "${required_images[@]}"; do
