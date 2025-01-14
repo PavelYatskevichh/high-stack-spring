@@ -16,6 +16,16 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = rootProject.group.toString()
+            artifactId = rootProject.name
+            from(components["java"])
+        }
+    }
+}
+
 tasks.jar {
     enabled = true
     archiveClassifier.set("")
