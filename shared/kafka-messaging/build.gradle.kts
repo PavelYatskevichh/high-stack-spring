@@ -10,6 +10,7 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+    withSourcesJar()
 }
 
 repositories {
@@ -19,8 +20,8 @@ repositories {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = rootProject.group.toString()
-            artifactId = rootProject.name
+            groupId = project.group.toString()
+            artifactId = project.name
             from(components["java"])
         }
     }
