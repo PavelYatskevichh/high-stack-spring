@@ -6,6 +6,7 @@ import org.gradle.kotlin.dsl.*
 
 plugins {
     `java-library`
+    `maven-publish`
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("jacoco")
