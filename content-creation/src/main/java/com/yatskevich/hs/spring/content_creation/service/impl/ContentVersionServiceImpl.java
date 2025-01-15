@@ -40,7 +40,7 @@ public class ContentVersionServiceImpl implements ContentVersionService {
 
         for (Revision revision : revisions) {
             RevisionDto revisionDto = new RevisionDto();
-            revisionDto.setContentId(revision.getId());
+            revisionDto.setContentId(revision.getContent().getId());
             revisionDto.setRevisionNumber(revision.getRevisionNumber());
             revisionDto.setDescription(revision.getDescription());
             revisionDto.setContentTitle(
