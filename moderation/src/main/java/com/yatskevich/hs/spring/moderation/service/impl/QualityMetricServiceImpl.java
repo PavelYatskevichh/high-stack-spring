@@ -1,11 +1,8 @@
 package com.yatskevich.hs.spring.moderation.service.impl;
 
 import com.yatskevich.hs.spring.moderation.entity.QualityMetric;
-import com.yatskevich.hs.spring.moderation.entity.Review;
-import com.yatskevich.hs.spring.moderation.mapper.ReviewMapper;
 import com.yatskevich.hs.spring.moderation.repository.QualityMetricRepository;
 import com.yatskevich.hs.spring.moderation.service.QualityMetricService;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

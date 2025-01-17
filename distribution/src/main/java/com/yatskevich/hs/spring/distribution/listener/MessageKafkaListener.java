@@ -2,7 +2,6 @@ package com.yatskevich.hs.spring.distribution.listener;
 
 import com.yatskevich.hs.spring.content_creation.api_client.dto.ContentStatusDto;
 import com.yatskevich.hs.spring.distribution.handler.MessageHandler;
-import com.yatskevich.hs.spring.distribution.service.PublicationService;
 import com.yatskevich.hs.spring.kafka_messaging.constant.MessageType;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

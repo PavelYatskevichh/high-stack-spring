@@ -1,7 +1,6 @@
 package com.yatskevich.hs.spring.content_creation.service;
 
 import com.yatskevich.hs.spring.content_creation.api_client.dto.RevisionDataDto;
-import com.yatskevich.hs.spring.content_creation.api_client.dto.RevisionDto;
 import com.yatskevich.hs.spring.content_creation.entity.Content;
 import com.yatskevich.hs.spring.content_creation.entity.Revision;
 import java.util.List;

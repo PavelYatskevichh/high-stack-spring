@@ -16,15 +16,15 @@ public class MessageHandlerMapConfig {
     @Bean
     public Map<MessageType, MessageHandler> messageHandlerMap(List<MessageHandler> messageHandlers) {
         return messageHandlers.stream()
-                .collect(Collectors.toMap(
-                        MessageHandler::getMessageType,
-                        Function.identity(),
-                        (h1, h2) -> {
-                            throw new IllegalArgumentException(
-                                    "Two equal MessageHandler: " + h1.getMessageType() + " and " + h2.getMessageType()
-                            );
-                        },
-                        () -> new EnumMap<>(MessageType.class)
-                ));
+            .collect(Collectors.toMap(
+                MessageHandler::getMessageType,
+                Function.identity(),
+                (h1, h2) -> {
+                    throw new IllegalArgumentException(
+                        "Two equal MessageHandler: " + h1.getMessageType() + " and " + h2.getMessageType()
+                    );
+                },
+                () -> new EnumMap<>(MessageType.class)
+            ));
     }
 }
