@@ -1,0 +1,24 @@
+autoscaling.enabled: false
+replicaCount: 1
+podAnnotations: {}
+podLabels: {}
+serviceAccountName: hs-spring-gateway-sa
+image:
+  name: hs/gateway
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 512Mi
+
+appConfig:
+  server:
+    port: 8080
+
+additional:
+  env:
+    CONTENT_CREATION_URL: http://hs-spring-content-creation-svc.high-stack:8080
+    MODERATION_URL: http://hs-spring-moderation-svc.high-stack:8080
+    DISTRIBUTION_URL: http://hs-spring-distribution-svc.high-stack:8080

@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: high-stack
+  labels:
+    app.kubernetes.io/component: controller
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+spec:
+  controller: k8s.io/ingress-nginx
+#  controller: example.com/ingress-controller
+#  parameters:
+#    apiGroup: k8s.example.com
+#    kind: IngressParameters
+#    name: high-stack
