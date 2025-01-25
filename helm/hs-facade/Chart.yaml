@@ -1,7 +1,7 @@
 apiVersion: v2
 kubeVersion: ">=1.14.0-0"
 type: application
-name: high-stack-facade
+name: hs-facade
 description: Facade helm chart of High-stack
 version: 0.0.1
 
@@ -18,3 +18,6 @@ dependencies:
   - name: distribution
     version: 0.0.1
     repository: "file://../distribution"
+  - name: gateway
+    version: 0.0.1
+    repository: "file://../gateway"

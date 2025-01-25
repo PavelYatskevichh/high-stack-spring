@@ -1,6 +1,29 @@
 name: high-stack
 services:
 
+  gateway:
+    image: hs/gateway
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        JAR_FILE: gateway/build/libs/app.jar
+        MODULE_NAME: gateway
+        APPLICATION_CLASS: com.yatskevich.hs.spring.gateway.GatewayApplication
+    environment:
+      SERVER_PORT: 8080
+      CONTENT_CREATION_URL: http://content-creation:8080
+      MODERATION_URL: http://moderation:8080
+      DISTRIBUTION_URL: http://distribution:8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - content-creation
+      - moderation
+      - distribution
+    networks:
+      - hs-network
+
   content-creation:
     image: hs/content-creation
     build:
@@ -12,8 +35,6 @@ services:
         APPLICATION_CLASS: com.yatskevich.hs.spring.content_creation.ContentCreationApplication
     env_file:
       - "service-docker.env"
-    ports:
-      - "8081:8080"
     depends_on:
       postgres:
         condition: service_healthy
@@ -37,8 +58,6 @@ services:
         APPLICATION_CLASS: com.yatskevich.hs.spring.moderation.ModerationApplication
     env_file:
       - "service-docker.env"
-    ports:
-      - "8082:8080"
     depends_on:
       postgres:
         condition: service_healthy
@@ -62,8 +81,6 @@ services:
         APPLICATION_CLASS: com.yatskevich.hs.spring.distribution.DistributionApplication
     env_file:
       - "service-docker.env"
-    ports:
-      - "8083:8080"
     depends_on:
       postgres:
         condition: service_healthy

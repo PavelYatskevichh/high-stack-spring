@@ -8,7 +8,7 @@
 NAMESPACE=high-stack
 
 # Helm chart location
-CHART_LOCATION=helm/high-stack-facade
+CHART_LOCATION=helm/hs-facade
 
 # Helm release name
 RELEASE_NAME=hs-spring

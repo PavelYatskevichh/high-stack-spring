@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: api-gateway
+
+server:
+  port: 8080
+
+contentCreationUrl: ${CONTENT_CREATION_URL:http://localhost:8081}
+moderationUrl: ${MODERATION_URL:http://localhost:8082}
+distributionUrl: ${DISTRIBUTION_URL:http://localhost:8083}

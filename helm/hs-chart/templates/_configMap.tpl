@@ -6,9 +6,9 @@ metadata:
   labels:
     {{- include "hs-chart.labels" . | nindent 4 }}
 data:
-  SPRING_THREADS_VIRTUAL_ENABLED: {{ default "false" .Values.appConfig.spring.threads.virtual.enabled | quote }}
+  SPRING_THREADS_VIRTUAL_ENABLED: {{ default "false" ((.Values.appConfig.spring).threads.virtual).enabled | quote }}
   SERVER_PORT: {{ default 8080 .Values.appConfig.server.port | quote }}
-  {{- if (.Values.appConfig.logging.level.com).yatskevich }}
+  {{- if ((.Values.appConfig.logging).level.com).yatskevich }}
   LOGGING_LEVEL_COM_YATSKEVICH: {{ .Values.appConfig.logging.level.com.yatskevich | quote }}
   {{- end }}
   {{- if (.Values.appConfig.kafka).bootstrapServersPattern }}
