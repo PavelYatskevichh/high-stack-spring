@@ -22,3 +22,12 @@ additional:
     CONTENT_CREATION_URL: http://hs-spring-content-creation-svc.high-stack:8080
     MODERATION_URL: http://hs-spring-moderation-svc.high-stack:8080
     DISTRIBUTION_URL: http://hs-spring-distribution-svc.high-stack:8080
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: high-stack.local.192.168.49.2.nip.io
+      paths:
+        - path: /
+          pathType: Prefix

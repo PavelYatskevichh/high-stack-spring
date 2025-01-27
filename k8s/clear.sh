@@ -22,4 +22,8 @@ if $cnpg_flag; then
   kubectl delete -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.25/releases/cnpg-1.25.0.yaml
 fi
 
+if $ingress_flag; then
+  minikube addons disable ingress
+fi
+
 kubectl delete namespace "$NAMESPACE"

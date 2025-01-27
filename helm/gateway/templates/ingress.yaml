@@ -1,0 +1,29 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "hs-chart.fullname" . }}
+  labels:
+    {{- include "hs-chart.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- with .pathType }}
+            pathType: {{ . }}
+            {{- end }}
+            backend:
+              service:
+                name: {{ include "hs-chart.fullname" $ }}-svc
+                port:
+                  number: {{ default 8080 ($.Values.container).port }}
+          {{- end }}
+    {{- end }}
+{{- end }}

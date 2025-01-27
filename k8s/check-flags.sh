@@ -2,6 +2,7 @@
 
 cnpg_flag=false
 strimzi_flag=false
+ingress_flag=false
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -11,6 +12,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --strimzi)
       strimzi_flag=true
+      shift
+      ;;
+    --ingress)
+      ingress_flag=true
       shift
       ;;
     *)

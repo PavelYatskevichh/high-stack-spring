@@ -3,9 +3,9 @@
 images=$(minikube image ls)
 
 required_images=(
+    "hs/content-creation"
     "hs/moderation"
     "hs/distribution"
-    "hs/content-creation"
     "hs/gateway"
 )
 
@@ -24,6 +24,7 @@ if ! $all_images_found; then
   ./gradlew build -x test
   docker compose -f docker/docker-compose.yaml build
   for image in "${required_images[@]}"; do
+      echo "Loading image '$image' to minikube."
       minikube image load "$image"
   done
 fi

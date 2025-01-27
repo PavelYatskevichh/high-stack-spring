@@ -13,8 +13,9 @@
 
 * To run project in kubernetes execute command from project root directory:
     ```shell
-    k8s/start.sh --cnpg --strimzi
+    k8s/start.sh --cnpg --strimzi --ingress
     ```
   Available properties: \
   ```--cnpg``` to deploy Cloudnative-PG \
-  ```--strimzi``` to deploy Strimzi
+  ```--strimzi``` to deploy Strimzi \
+  ```--ingress``` to enable Ingress addon
