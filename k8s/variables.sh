@@ -13,8 +13,8 @@ CHART_LOCATION=helm/hs-facade
 # Helm release name
 RELEASE_NAME=hs-spring
 
-# Namespace for Strimzi operator //TODO move to a separate namespace (strimzi-system)
-STRIMZI_NAMESPACE=high-stack
+# Namespace for Strimzi operator
+STRIMZI_NAMESPACE=strimzi-system
 
 # Timeout
 TIMEOUT=20m

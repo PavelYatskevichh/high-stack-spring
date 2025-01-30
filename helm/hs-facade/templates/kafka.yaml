@@ -5,7 +5,7 @@ metadata:
   labels:
     strimzi.io/cluster: {{ .Values.kafka.clusterName }}-cluster
 spec:
-  replicas: 1
+  replicas: {{ .Values.kafka.controller.instances }}
   roles:
     - controller
   storage:
@@ -25,7 +25,7 @@ metadata:
   labels:
     strimzi.io/cluster: {{ .Values.kafka.clusterName }}-cluster
 spec:
-  replicas: 1
+  replicas: {{ .Values.kafka.broker.instances }}
   roles:
     - broker
   storage:

@@ -20,20 +20,20 @@ fi
 echo "Checking for installed cloudnative-pg operator ..."
 if [[ $cnpg_flag == true && -z $(kubectl get pod -l app.kubernetes.io/name=cloudnative-pg --all-namespaces) ]]; then
   echo "Installing cloudnative-pg operator ..."
-  kubectl apply --server-side -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.25/releases/cnpg-1.25.0.yaml
+  kubectl apply --server-side \
+  -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.25/releases/cnpg-1.25.0.yaml
 fi
 
 echo "Checking for installed strimzi-cluster-operator ..."
 if [[ $strimzi_flag == true && -z $(kubectl get pod -l name=strimzi-cluster-operator --all-namespaces) ]]; then
-  echo "Creating namespace for strimzi-cluster-operator ..."
-  kubectl create namespace "$STRIMZI_NAMESPACE"
   echo "Installing strimzi-cluster-operator ..."
-  kubectl create -f "https://strimzi.io/install/latest?namespace=$STRIMZI_NAMESPACE" -n "$STRIMZI_NAMESPACE"
+  helm install strimzi-cluster-operator oci://quay.io/strimzi-helm/strimzi-kafka-operator -n "$STRIMZI_NAMESPACE" --create-namespace \
+  --set=watchAnyNamespace=true
 fi
 
-kubectl wait pod --all --for=condition=ready --timeout="$TIMEOUT" -l app.kubernetes.io/name=cloudnative-pg --all-namespaces \
+kubectl wait pod --all --for=condition=ready -l app.kubernetes.io/name=cloudnative-pg --timeout="$TIMEOUT" --all-namespaces \
 && echo "Cloudnative-pg operator is installed."
-kubectl wait pod --all --for=condition=ready --timeout="$TIMEOUT" -l name=strimzi-cluster-operator --all-namespaces \
+kubectl wait pod --all --for=condition=ready -l name=strimzi-cluster-operator --timeout="$TIMEOUT" -n "$STRIMZI_NAMESPACE" \
 && echo "Strimzi-cluster-operator is installed."
 
 echo "Creating namespace for application ..."

@@ -12,10 +12,7 @@ fi
 helm uninstall "$RELEASE_NAME" --namespace "$NAMESPACE" --wait --timeout "$TIMEOUT"
 
 if $strimzi_flag; then
-  kubectl delete $(kubectl get strimzi -o name -n "$STRIMZI_NAMESPACE") -n "$STRIMZI_NAMESPACE"
-  kubectl delete pvc -l "strimzi.io/name=$NAMESPACE" -n "$STRIMZI_NAMESPACE"
-  kubectl delete -f "https://strimzi.io/install/latest?namespace=$STRIMZI_NAMESPACE" -n "$STRIMZI_NAMESPACE"
-  kubectl delete namespace "$STRIMZI_NAMESPACE"
+  helm uninstall strimzi-cluster-operator
 fi
 
 if $cnpg_flag; then

@@ -7,6 +7,10 @@ database:
 
 kafka:
   clusterName: kafka
+  controller:
+    instances: 3
+  broker:
+    instances: 3
   config:
     offsets.topic.replication.factor: 3
     transaction.state.log.replication.factor: 3
